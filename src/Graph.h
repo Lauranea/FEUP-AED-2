@@ -32,7 +32,9 @@ class Graph
     Graph();
     Graph(int v_);
     void addEdge(Airport src, Airport dest, Airline line); 
-    void BFS(int s);
+    void BFS(int s, int f);
+    static int hash(string code);
+    static string unhash(int code);
 };
 
 #endif

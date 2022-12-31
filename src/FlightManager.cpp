@@ -11,8 +11,8 @@ void FlightManager::initialize()
     airlines = Read::read_airlines();
     air = Read::read_flights(airports, airlines);
 
-    cout << airlines.size() << endl;
-    cout << airports.size() << endl;
+    int c = Graph::hash("CDG");
+    int f = Graph::hash("WWK");
 
-    air.BFS(0);
+    air.BFS(c, f);
 }

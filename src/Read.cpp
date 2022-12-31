@@ -35,7 +35,6 @@ unordered_map<string, Airline> Read::read_airlines()
 
 unordered_map<string, Airport> Read::read_airports()
 {
-    int cur_index = 0;
     unordered_map<string, Airport> v;
     ifstream fi;
     fi.open("../dados/airports.csv");
@@ -59,8 +58,7 @@ unordered_map<string, Airport> Read::read_airports()
         getline(line, longitude_string, '\n');
         latitude = stof(latitude_string);
         longitude = stof(longitude_string);
-        v[code] = Airport(cur_index, code, name, city, country, latitude, longitude);
-        cur_index++;
+        v[code] = Airport(code, name, city, country, latitude, longitude);
     }
 
     fi.close();

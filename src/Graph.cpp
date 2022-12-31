@@ -7,27 +7,33 @@
 
 Graph::Graph()
 {
-    size = 0;
+    nodes.resize(18278);
 }
 
-Graph::Graph(int v_)
+int Graph::hash(string code)
 {
-    size = v_;
+    return (int(code[0])-64)*676 + (int(code[1])-64)*26 + (int(code[2])-64);
+}
+
+string Graph::unhash(int code)
+{
+    string converted = "";
+    while (code > 0)
+    {
+        int remainder = code % 26;
+        converted = char(remainder - 1 + 'A') + converted;
+        code = (code - remainder) / 26;
+    }
+
+    return converted;
 }
  
 void Graph::addEdge(Airport src, Airport dest, Airline line)
 {
-    if (src.get_index() >= nodes.size())
-    {
-        nodes.push_back({{Flight(src, dest, line)}});
-    }
-    else
-    {
-        nodes[src.get_index()].close.push_back(Flight(src, dest, line));
-    }
+    nodes[hash(src.get_code())].close.push_back(Flight(src, dest, line));
 }
  
-void Graph::BFS(int s)
+void Graph::BFS(int s, int f)
 {
     vector<bool> visited;
     visited.resize(nodes.size(), false);
@@ -40,12 +46,17 @@ void Graph::BFS(int s)
     while (!l.empty())
     {
         s = l.front();
-        cout << s << " ";
+        cout << nodes[s].close.begin()->get_source().get_code() << " ";
         l.pop_front();
  
         for (auto e : nodes[s].close)
         {
-            int w = e.get_target().get_index();
+            int w = hash(e.get_target().get_code());
+            if (w == f)
+            {
+                cout << e.get_target().get_code() << endl;
+                return;
+            }
             if (!visited[w])
             {
                 visited[w] = true;
