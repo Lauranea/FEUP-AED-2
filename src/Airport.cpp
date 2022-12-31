@@ -9,8 +9,9 @@ Airport::Airport()
 {
 }
 
-Airport::Airport(string code_, string name_, string city_, string country_, float latitude_, float longitude_)
+Airport::Airport(int index_, string code_, string name_, string city_, string country_, float latitude_, float longitude_)
 {
+    index = index_;
     code = code_;
     name = name_;
     city = city_;

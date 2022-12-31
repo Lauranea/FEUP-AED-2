@@ -24,7 +24,7 @@ unordered_map<string, Airline> Read::read_airlines()
         getline(line, code, ',');
         getline(line, name, ',');
         getline(line, callsign, ',');
-        getline(line, country, ',');
+        getline(line, country, '\n');
         v[code] = Airline(code, name, callsign, country);
     }
 
@@ -35,6 +35,7 @@ unordered_map<string, Airline> Read::read_airlines()
 
 unordered_map<string, Airport> Read::read_airports()
 {
+    int cur_index = 0;
     unordered_map<string, Airport> v;
     ifstream fi;
     fi.open("../dados/airports.csv");
@@ -55,19 +56,20 @@ unordered_map<string, Airport> Read::read_airports()
         getline(line, city, ',');
         getline(line, country, ',');
         getline(line, latitude_string, ',');
-        getline(line, longitude_string, ',');
+        getline(line, longitude_string, '\n');
         latitude = stof(latitude_string);
         longitude = stof(longitude_string);
-        v[code] = Airport(code, name, city, country, latitude, longitude);
+        v[code] = Airport(cur_index, code, name, city, country, latitude, longitude);
+        cur_index++;
     }
 
     fi.close();
     return v;
 }
 
-Graph<Flight> Read::read_flights()
+Graph Read::read_flights(unordered_map<string, Airport> airports, unordered_map<string, Airline> airlines)
 {
-    Graph<Flight> v;
+    Graph v;
     ifstream fi;
     fi.open("../dados/flights.csv");
     if (!fi.is_open())
@@ -79,7 +81,12 @@ Graph<Flight> Read::read_flights()
     getline(fi, buffer, '\n');
     while (getline(fi, buffer, '\n'))
     {
-        
+        stringstream line(buffer);
+        string src, dest, aline;
+        getline(line, src, ',');
+        getline(line, dest, ',');
+        getline(line, aline, '\n');
+        v.addEdge(airports[src], airports[dest], airlines[aline]);
     }
 
     fi.close();

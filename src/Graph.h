@@ -10,21 +10,29 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include "Flight.h"
+#include "Airport.h"
+#include "Airline.h"
 
 using namespace std;
 
-template <typename T>
 class Graph 
 {
   private:
     int size;
-    list<T> adj;
+    struct Node
+    {
+      list<Flight> close;
+    };
+
+    vector<Node> nodes;
+
   
   public:
     Graph();
     Graph(int v_);
-    void addEdge(T src, T dest); 
-
+    void addEdge(Airport src, Airport dest, Airline line); 
+    void BFS(int s);
 };
 
 #endif

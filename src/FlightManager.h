@@ -22,7 +22,7 @@ using namespace std;
 class FlightManager
 {
   private:
-    Graph<Flight> flights;
+    Graph air;
     unordered_map<string, Airport> airports;
     unordered_map<string, Airline> airlines;
 

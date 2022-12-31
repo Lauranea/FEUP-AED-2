@@ -26,7 +26,7 @@ class Read
   public:
     static unordered_map<string, Airline> read_airlines();
     static unordered_map<string, Airport> read_airports();
-    static Graph<Flight> read_flights();
+    static Graph read_flights(unordered_map<string, Airport> airports, unordered_map<string, Airline> airlines);
 };
 
 #endif

@@ -4,49 +4,52 @@
  */
 
 #include "Graph.h"
-#include "Flight.h"
 
-template <>
-Graph<Flight>::Graph()
+Graph::Graph()
 {
     size = 0;
-    adj.resize(size);
 }
 
-template <class T>
-Graph<T>::Graph(int v_)
+Graph::Graph(int v_)
 {
     size = v_;
-    adj.resize(size);
 }
  
-template <class T>
-void Graph<T>::addEdge(T src, T dest)
+void Graph::addEdge(Airport src, Airport dest, Airline line)
 {
-    if (src<1 || src>n || dest<1 || dest>n) return;
-    nodes[src].adj.push_back({dest, weight});
+    if (src.get_index() >= nodes.size())
+    {
+        nodes.push_back({{Flight(src, dest, line)}});
+    }
+    else
+    {
+        nodes[src.get_index()].close.push_back(Flight(src, dest, line));
+    }
 }
  
-template <class T>
-void Graph<T>::BFS(int s)
+void Graph::BFS(int s)
 {
     vector<bool> visited;
-    visited.resize(v, false);
+    visited.resize(nodes.size(), false);
  
-    list<int> queue;
+    list<int> l;
  
     visited[s] = true;
-    queue.push_back(s);
+    l.push_back(s);
  
-    while (!queue.empty()) {
-        s = queue.front();
+    while (!l.empty())
+    {
+        s = l.front();
         cout << s << " ";
-        queue.pop_front();
+        l.pop_front();
  
-        for (auto adjecent : adj[s]) {
-            if (!visited[adjecent]) {
-                visited[adjecent] = true;
-                queue.push_back(adjecent);
+        for (auto e : nodes[s].close)
+        {
+            int w = e.get_target().get_index();
+            if (!visited[w])
+            {
+                visited[w] = true;
+                l.push_back(w);
             }
         }
     }

@@ -7,10 +7,12 @@
 
 void FlightManager::initialize()
 {
-    airlines = Read::read_airlines();
     airports = Read::read_airports();
-    flights = Read::read_flights();
+    airlines = Read::read_airlines();
+    air = Read::read_flights(airports, airlines);
 
     cout << airlines.size() << endl;
     cout << airports.size() << endl;
+
+    air.BFS(0);
 }

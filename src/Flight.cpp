@@ -9,7 +9,7 @@ Flight::Flight()
 {
 }
 
-Flight::Flight(Airport source_, Airport target_, Airport airline_)
+Flight::Flight(Airport source_, Airport target_, Airline airline_)
 {
     source = source_;
     target = target_;
