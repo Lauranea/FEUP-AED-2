@@ -5,13 +5,11 @@
 
 #include "Read.h"
 
-#define RESET "\033[0m"
-
-vector<airlines> Read::read_airlines()
+unordered_map<string, Airline> Read::read_airlines()
 {
-    vector<airlines> v;
+    unordered_map<string, Airline> v;
     ifstream fi;
-    fi.open("../airlines.csv");
+    fi.open("../dados/airlines.csv");
     if (!fi.is_open())
     {
         return v;
@@ -22,17 +20,12 @@ vector<airlines> Read::read_airlines()
     while (getline(fi, buffer, '\n'))
     {
         stringstream line(buffer);
-        string buf;
-        airlines p;
-        getline(line, buf, ',');
-        p.AirlineCode = buf;
-        getline(line, buf, ',');
-        p.AirlineName = buf;
-        getline(line, buf, ',');
-        p.AirlineCallsign = buf;
-        getline(line, buf, '\r');
-        p.AirlineCountry = buf;
-        v.push_back(p);
+        string code, name, callsign, country;
+        getline(line, code, ',');
+        getline(line, name, ',');
+        getline(line, callsign, ',');
+        getline(line, country, ',');
+        v[code] = Airline(code, name, callsign, country);
     }
 
     fi.close();
@@ -40,11 +33,11 @@ vector<airlines> Read::read_airlines()
 }
 
 
-vector<airports> Read::read_airports()
+unordered_map<string, Airport> Read::read_airports()
 {
-    vector<airports> v;
+    unordered_map<string, Airport> v;
     ifstream fi;
-    fi.open("../airports.csv");
+    fi.open("../dados/airports.csv");
     if (!fi.is_open())
     {
         return v;
@@ -55,32 +48,28 @@ vector<airports> Read::read_airports()
     while (getline(fi, buffer, '\n'))
     {
         stringstream line(buffer);
-        string buf;
-        airports p;
-        getline(line, buf, ',');
-        p.AirportCode = buf;
-        getline(line, buf, ',');
-        p.AirportName = buf;
-        getline(line, buf, ',');
-        p.AirportCity = buf;
-        getline(line, buf, ',');
-        p.AirportCountry = buf;
-          getline(line, buf, ',');
-        p.AirportLatitude = buf;
-        getline(line, buf, '\r');
-        p.AirportLongitude = buf;
-        v.push_back(p);
+        string code, name, city, country, latitude_string, longitude_string;
+        float latitude, longitude;
+        getline(line, code, ',');
+        getline(line, name, ',');
+        getline(line, city, ',');
+        getline(line, country, ',');
+        getline(line, latitude_string, ',');
+        getline(line, longitude_string, ',');
+        latitude = stof(latitude_string);
+        longitude = stof(longitude_string);
+        v[code] = Airport(code, name, city, country, latitude, longitude);
     }
 
     fi.close();
     return v;
 }
 
-vector<flights> Read::read_flights()
+Graph<Flight> Read::read_flights()
 {
-    vector<flights> v;
+    Graph<Flight> v;
     ifstream fi;
-    fi.open("../flights.csv");
+    fi.open("../dados/flights.csv");
     if (!fi.is_open())
     {
         return v;
@@ -90,16 +79,7 @@ vector<flights> Read::read_flights()
     getline(fi, buffer, '\n');
     while (getline(fi, buffer, '\n'))
     {
-        stringstream line(buffer);
-        string buf;
-        flights p;
-        getline(line, buf, ',');
-        p.FlightSource = buf;
-        getline(line, buf, ',');
-        p.FlightTarget = buf;
-        getline(line, buf, '\r');
-        p.FlightAirline = buf;
-        v.push_back(p);
+        
     }
 
     fi.close();

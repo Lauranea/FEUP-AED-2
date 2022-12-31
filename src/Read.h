@@ -9,19 +9,24 @@
 #include <list>
 #include <vector>
 
-#include "Structs.h"
 #include <fstream>
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <sstream>
 #include <string>
+#include "Airline.h"
+#include "Airport.h"
+#include "Flight.h"
+#include "Graph.h"
 
 using namespace std;
 
 class Read
 {
   public:
-    vector<airlines> read_airlines();
-    vector<airports> read_airports();
-    vector<flights> read_flights();
+    static unordered_map<string, Airline> read_airlines();
+    static unordered_map<string, Airport> read_airports();
+    static Graph<Flight> read_flights();
 };
+
+#endif
