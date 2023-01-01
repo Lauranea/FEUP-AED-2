@@ -20,16 +20,13 @@ using namespace std;
 class Graph 
 {
   private:
-    int size;
-
-    unordered_map<string, list<Flight>> nodes;
-
   
   public:
     Graph();
     Graph(int v_);
     void addEdge(Airport src, Airport dest, Airline line); 
     vector<string> BFS(string s, string f);
+    unordered_map<string, list<Flight>> nodes;
     // static int hash(string code);
     // static string unhash(int code);
 };

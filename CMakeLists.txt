@@ -18,6 +18,8 @@ src/FlightManager.cpp
 src/FlightManager.h
 src/Graph.cpp
 src/Graph.h
+src/IO.cpp
+src/IO.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE})

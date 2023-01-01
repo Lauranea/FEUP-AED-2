@@ -28,6 +28,10 @@ class FlightManager
 
   public:
     void initialize();
+    Graph get_flights() {return air;};
+    unordered_map<string, Airport> get_airports() {return airports;};
+    unordered_map<string, Airline> get_airlines() {return airlines;};
+
 };
 
 #endif

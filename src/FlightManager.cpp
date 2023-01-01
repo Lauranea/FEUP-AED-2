@@ -10,10 +10,4 @@ void FlightManager::initialize()
     airports = Read::read_airports();
     airlines = Read::read_airlines();
     air = Read::read_flights(airports, airlines);
-
-
-    for (auto p : air.BFS("DAU", "GOH"))
-    {
-        cout << p << endl;
-    }
 }
