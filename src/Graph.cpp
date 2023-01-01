@@ -33,35 +33,37 @@ void Graph::addEdge(Airport src, Airport dest, Airline line)
     nodes[hash(src.get_code())].close.push_back(Flight(src, dest, line));
 }
  
-void Graph::BFS(int s, int f)
+vector<string> Graph::BFS(int s, int f)
 {
     vector<bool> visited;
     visited.resize(nodes.size(), false);
  
-    list<int> l;
+    list<pair<int, vector<string>>> l;
  
     visited[s] = true;
-    l.push_back(s);
+    l.push_back({s, {unhash(s)}});
  
     while (!l.empty())
     {
-        s = l.front();
-        cout << nodes[s].close.begin()->get_source().get_code() << " ";
-        l.pop_front();
+        s = l.front().first;
  
         for (auto e : nodes[s].close)
         {
             int w = hash(e.get_target().get_code());
             if (w == f)
             {
-                cout << e.get_target().get_code() << endl;
-                return;
+                l.front().second.push_back(e.get_target().get_code());
+                return l.front().second;
             }
             if (!visited[w])
             {
                 visited[w] = true;
-                l.push_back(w);
+                vector<string> path = l.front().second;
+                path.push_back(e.get_target().get_code());
+                l.push_back({w, {path}});
             }
         }
+
+        l.pop_front();
     }
 }
