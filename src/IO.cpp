@@ -9,10 +9,10 @@ void IO::get_airport_info(FlightManager &fm)
 {
     cout << "\n"
             "1 - How many flights start on certain Airport?\n"
-            "2 - How many Airlines use this Airport?\n"
-            "3 - How many diferent Airports can you fly to from a certain Airport?\n"
-            "4 - How many diferent Countries can you fly to from a certain Airport?\n"
-            "5 - How many diferent places can you fly to from from a certain Airport in X flights max?\n" << endl;
+            "2 - How many Airlines operate on this Airport?\n"
+            "3 - How many different Airports can you fly to from a certain Airport?\n"
+            "4 - How many different Countries can you fly to from a certain Airport?\n"
+            "5 - How many different places can you fly to from from a certain Airport in X flights max?\n" << endl;
     
     int choice = 0;
     cin >> choice;
@@ -51,20 +51,59 @@ void IO::get_airport_info_1(FlightManager &fm)
 
 void IO::get_airport_info_2(FlightManager &fm)
 {
-    cout << "info" << endl;
+    cout << "\nWhich Airport?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    int sum = 0;
+    set<string> diferent_airlines;
+    list<Flight> flights = fm.get_flights().nodes[choice];
+    for (Flight p : flights)
+    {
+        diferent_airlines.insert(p.get_airline().get_code());
+    }
+    cout << endl << diferent_airlines.size() << " Airlines operate on this Airport\n" << endl;
 }
 
 void IO::get_airport_info_3(FlightManager &fm)
 {
-    cout << "info" << endl;
+    cout << "\nWhich Airport?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    int sum = 0;
+    set<string> different_airports;
+    list<Flight> flights = fm.get_flights().nodes[choice];
+    for (Flight p : flights)
+    {
+        different_airports.insert(p.get_target().get_code());
+    }
+    cout << endl << "You can fly to " << different_airports.size() << " different Airports from this Airport\n" << endl;
 }
 
 void IO::get_airport_info_4(FlightManager &fm)
 {
-    cout << "info" << endl;
+    cout << "\nWhich Airport?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    int sum = 0;
+    set<string> different_airports;
+    list<Flight> flights = fm.get_flights().nodes[choice];
+    for (Flight p : flights)
+    {
+        different_airports.insert(p.get_target().get_country());
+    }
+    cout << endl << "You can fly to " << different_airports.size() << " different Countries from this Airport\n" << endl;
 }
 
 void IO::get_airport_info_5(FlightManager &fm)
 {
-    cout << "info" << endl;
+    cout << "\nWhich Airport?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    cout << "\nMax Flights?\n" << endl;
+    int max = 0;
+    cin >> max;
+    if (max > 0)
+    {
+        cout << endl << "You can fly to " << fm.get_flights().BFL(choice, max+1).size() << " different Airports within " << max << " flights from this Airport\n" << endl;
+    }
 }

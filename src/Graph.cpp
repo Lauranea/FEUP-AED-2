@@ -64,3 +64,35 @@ vector<string> Graph::BFS(string s, string f)
         l.pop_front();
     }
 }
+
+set<string> Graph::BFL(string s, int d)
+{
+    unordered_map<string, bool> visited;
+
+    set<string> airports_visited;
+    set<string> airports_visiting = {s};
+    set<string> temp;
+
+    visited[s] = true;
+
+    for (int i = 0; i < d; i++)
+    {
+        for (string s : airports_visiting)
+        {
+            for (auto e : nodes[s])
+            {
+                if (!visited[e.get_target().get_code()])
+                {
+                    temp.insert(e.get_target().get_code());
+                    visited[e.get_target().get_code()] = true;
+                }
+            }
+            airports_visited.insert(s);
+        }
+        for (string s : temp)
+        {
+            airports_visiting.insert(s);
+        }
+    }
+    return airports_visited;
+}
