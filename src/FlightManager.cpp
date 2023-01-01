@@ -11,10 +11,8 @@ void FlightManager::initialize()
     airlines = Read::read_airlines();
     air = Read::read_flights(airports, airlines);
 
-    int c = Graph::hash("DAU");
-    int f = Graph::hash("GOH");
 
-    for (auto p : air.BFS(c, f))
+    for (auto p : air.BFS("DAU", "GOH"))
     {
         cout << p << endl;
     }

@@ -7,60 +7,57 @@
 
 Graph::Graph()
 {
-    nodes.resize(18278);
+    // nodes.resize(18278);
 }
 
-int Graph::hash(string code)
-{
-    return (int(code[0])-64)*676 + (int(code[1])-64)*26 + (int(code[2])-64);
-}
+// int Graph::hash(string code)
+// {
+//     return (int(code[0])-64)*676 + (int(code[1])-64)*26 + (int(code[2])-64);
+// }
 
-string Graph::unhash(int code)
-{
-    string converted = "";
-    while (code > 0)
-    {
-        int remainder = code % 26;
-        converted = char(remainder - 1 + 'A') + converted;
-        code = (code - remainder) / 26;
-    }
-
-    return converted;
-}
+// string Graph::unhash(int code)
+// {
+//     string converted = "";
+//     while (code > 0)
+//     {
+//         int remainder = code % 26;
+//         converted = char(remainder - 1 + 'A') + converted;
+//         code = (code - remainder) / 26;
+//     }
+//     return converted;
+// }
  
 void Graph::addEdge(Airport src, Airport dest, Airline line)
 {
-    nodes[hash(src.get_code())].close.push_back(Flight(src, dest, line));
+    nodes[src.get_code()].push_back(Flight(src, dest, line));
 }
  
-vector<string> Graph::BFS(int s, int f)
+vector<string> Graph::BFS(string s, string f)
 {
-    vector<bool> visited;
-    visited.resize(nodes.size(), false);
+    unordered_map<string, bool> visited;
  
-    list<pair<int, vector<string>>> l;
+    list<pair<string, vector<string>>> l;
  
     visited[s] = true;
-    l.push_back({s, {unhash(s)}});
+    l.push_back({s, {s}});
  
     while (!l.empty())
     {
         s = l.front().first;
  
-        for (auto e : nodes[s].close)
+        for (auto e : nodes[s])
         {
-            int w = hash(e.get_target().get_code());
-            if (w == f)
+            if (e.get_target().get_code() == f)
             {
                 l.front().second.push_back(e.get_target().get_code());
                 return l.front().second;
             }
-            if (!visited[w])
+            if (!visited[e.get_target().get_code()])
             {
-                visited[w] = true;
+                visited[e.get_target().get_code()] = true;
                 vector<string> path = l.front().second;
                 path.push_back(e.get_target().get_code());
-                l.push_back({w, {path}});
+                l.push_back({e.get_target().get_code(), {path}});
             }
         }
 

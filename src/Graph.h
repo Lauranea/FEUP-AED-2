@@ -10,6 +10,7 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <unordered_map>
 #include "Flight.h"
 #include "Airport.h"
 #include "Airline.h"
@@ -20,21 +21,17 @@ class Graph
 {
   private:
     int size;
-    struct Node
-    {
-      list<Flight> close;
-    };
 
-    vector<Node> nodes;
+    unordered_map<string, list<Flight>> nodes;
 
   
   public:
     Graph();
     Graph(int v_);
     void addEdge(Airport src, Airport dest, Airline line); 
-    vector<string> BFS(int s, int f);
-    static int hash(string code);
-    static string unhash(int code);
+    vector<string> BFS(string s, string f);
+    // static int hash(string code);
+    // static string unhash(int code);
 };
 
 #endif
