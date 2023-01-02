@@ -84,7 +84,9 @@ Graph Read::read_flights(unordered_map<string, Airport> airports, unordered_map<
         getline(line, src, ',');
         getline(line, dest, ',');
         getline(line, aline, '\n');
-        v.addEdge(airports[src], airports[dest], airlines[aline]);
+        Airport a1 = airports[src];
+        Airport a2 = airports[dest];
+        v.addEdge(a1, a2, airlines[aline], Graph::get_distance(a1.get_latitude(), a1.get_longitude(), a2.get_latitude(), a2.get_longitude()));
     }
 
     fi.close();

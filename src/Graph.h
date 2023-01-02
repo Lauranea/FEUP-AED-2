@@ -15,6 +15,7 @@
 #include "Airport.h"
 #include "Airline.h"
 #include <set>
+#include <climits>
 
 using namespace std;
 
@@ -25,10 +26,11 @@ class Graph
   public:
     Graph();
     Graph(int v_);
-    void addEdge(Airport src, Airport dest, Airline line); 
-    vector<string> BFS(string s, string f); // Breadth First Search
+    void addEdge(Airport src, Airport dest, Airline line, float weight); 
+    vector<string> BFS(string s, string f, unordered_map<string, Airport> airports); // Breadth First Search
     set<string> BFL(string s, int d); // Breadth First Listing
     unordered_map<string, list<Flight>> nodes;
+    static float get_distance(float lat1, float lon1, float lat2, float lon2);
     // static int hash(string code);
     // static string unhash(int code);
 };

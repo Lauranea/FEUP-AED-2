@@ -20,13 +20,15 @@ class Flight
     Airport source;
     Airport target;
     Airline airline;
+    float weight;
 
   public:
     Flight();
-    Flight(Airport source_, Airport target_, Airline airline_);
+    Flight(Airport source_, Airport target_, Airline airline_, float weight);
     Airport get_source() {return source;};
     Airport get_target() {return target;};
     Airline get_airline() {return airline;};
+    float get_weight() {return weight;};
 };
 
 #endif

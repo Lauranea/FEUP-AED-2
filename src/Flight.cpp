@@ -9,9 +9,10 @@ Flight::Flight()
 {
 }
 
-Flight::Flight(Airport source_, Airport target_, Airline airline_)
+Flight::Flight(Airport source_, Airport target_, Airline airline_, float weight)
 {
     source = source_;
     target = target_;
     airline = airline_;
+    weight = weight;
 }

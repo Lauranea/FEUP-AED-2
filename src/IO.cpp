@@ -8,8 +8,8 @@
 void IO::get_airport_info(FlightManager &fm)
 {
     cout << "\n"
-            "1 - How many flights start on certain Airport?\n"
-            "2 - How many Airlines operate on this Airport?\n"
+            "1 - How many flights start on a certain Airport?\n"
+            "2 - How many Airlines operate on a certain Airport?\n"
             "3 - How many different Airports can you fly to from a certain Airport?\n"
             "4 - How many different Countries can you fly to from a certain Airport?\n"
             "5 - How many different places can you fly to from from a certain Airport in X flights max?\n" << endl;
