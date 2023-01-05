@@ -11,9 +11,9 @@ void FlightManager::initialize()
     airlines = Read::read_airlines();
     air = Read::read_flights(airports, airlines);
 
-    vector<string> a = air.BFS("CDG", "WWK", airports);
-    for (auto b : a)
-    {
-        cout << b << endl;
-    }
+    // vector<string> a = air.BFS("CDG", "WWK", airports);
+    // for (auto b : a)
+    // {
+    //     cout << b << endl;
+    // }
 }

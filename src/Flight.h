@@ -24,7 +24,7 @@ class Flight
 
   public:
     Flight();
-    Flight(Airport source_, Airport target_, Airline airline_, float weight);
+    Flight(Airport source_, Airport target_, Airline airline_, float weight_);
     Airport get_source() {return source;};
     Airport get_target() {return target;};
     Airline get_airline() {return airline;};

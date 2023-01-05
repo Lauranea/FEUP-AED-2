@@ -45,7 +45,7 @@ void IO::get_airport_info_1(FlightManager &fm)
     cout << "\nWhich Airport?\n" << endl;
     string choice = "";
     cin >> choice;
-    int sum = fm.get_flights().nodes[choice].size();
+    int sum = fm.get_flights().nodes[choice].adj.size();
     cout << endl << sum << " flights start on this Airport\n" << endl;
 }
 
@@ -56,7 +56,7 @@ void IO::get_airport_info_2(FlightManager &fm)
     cin >> choice;
     int sum = 0;
     set<string> diferent_airlines;
-    list<Flight> flights = fm.get_flights().nodes[choice];
+    list<Flight> flights = fm.get_flights().nodes[choice].adj;
     for (Flight p : flights)
     {
         diferent_airlines.insert(p.get_airline().get_code());
@@ -71,7 +71,7 @@ void IO::get_airport_info_3(FlightManager &fm)
     cin >> choice;
     int sum = 0;
     set<string> different_airports;
-    list<Flight> flights = fm.get_flights().nodes[choice];
+    list<Flight> flights = fm.get_flights().nodes[choice].adj;
     for (Flight p : flights)
     {
         different_airports.insert(p.get_target().get_code());
@@ -86,7 +86,7 @@ void IO::get_airport_info_4(FlightManager &fm)
     cin >> choice;
     int sum = 0;
     set<string> different_airports;
-    list<Flight> flights = fm.get_flights().nodes[choice];
+    list<Flight> flights = fm.get_flights().nodes[choice].adj;
     for (Flight p : flights)
     {
         different_airports.insert(p.get_target().get_country());

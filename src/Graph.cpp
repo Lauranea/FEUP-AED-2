@@ -29,7 +29,7 @@ Graph::Graph()
  
 void Graph::addEdge(Airport src, Airport dest, Airline line, float weight)
 {
-    nodes[src.get_code()].push_back(Flight(src, dest, line, weight));
+    nodes[src.get_code()].adj.push_back(Flight(src, dest, line, weight));
 }
 
 float Graph::get_distance(float lat1, float lon1, float lat2, float lon2)
@@ -48,67 +48,38 @@ float Graph::get_distance(float lat1, float lon1, float lat2, float lon2)
     return rad * c;
 }
  
-vector<string> Graph::BFS(string s, string f, unordered_map<string, Airport> airports)
+vector<string> Graph::BFS(string a, string b, unordered_map<string, Airport> airports)
 {
-    unordered_map<string, bool> visited;
- 
-    list<pair<string, vector<string>>> l;
+    unordered_map<string, pair<int, vector<string>>> ans;
+    ans[a] = {0, {}};
 
-    vector<vector<string>> all_cases;
- 
-    visited[s] = true;
-    l.push_back({s, {s}});
- 
-    while (!l.empty())
+    for (auto &[key, value] : nodes) value.visited = false; // c++17 flex
+
+    queue<string> q;
+    q.push(a);
+    nodes[a].visited = true;
+
+    if (a == b)
     {
-        s = l.front().first;
-        bool add = true;
-        for (auto e : nodes[s])
+        return {};
+    }
+    while (!q.empty())
+    {
+        for (auto e : nodes[q.front()].adj)
         {
-            if (e.get_target().get_code() == f)
+            string w = e.get_target().get_code();
+            if (!nodes[w].visited || ans[q.front()].first + e.get_weight() < ans[w].first)
             {
-                l.front().second.push_back({e.get_target().get_code()});
-                all_cases.push_back(l.front().second);
-                add = false;
+                ans[w] = {ans[q.front()].first + e.get_weight(), ans[q.front()].second};
+                ans[w].second.push_back(e.get_target().get_code());
+                q.push(w);
+                nodes[w].visited = true;
             }
         }
-        if (add)
-        {
-            for (auto e : nodes[s])
-            {
-                if (!visited[e.get_target().get_code()])
-                {
-                    visited[e.get_target().get_code()] = true;
-                    vector<string> path = l.front().second;
-                    path.push_back(e.get_target().get_code());
-                    l.push_back({e.get_target().get_code(), {path}});
-                }
-            }
-        }
-
-        l.pop_front();
+        q.pop();
     }
 
-    vector<string> best;
-    float best_weight = INT_MAX;
-
-    for (int i = 0; i < all_cases.size(); i++)
-    {
-        float weight = 0;
-        for (int j = 0; j < all_cases[i].size() - 1; j++)
-        {
-            Airport a1 = airports[all_cases[i][j]];
-            Airport a2 = airports[all_cases[i][j+1]];
-            weight += get_distance(a1.get_latitude(), a1.get_longitude(), a2.get_latitude(), a2.get_longitude());
-        }
-        if (weight < best_weight)
-        {
-            best = all_cases[i];
-            best_weight = weight;
-        }
-    }
-
-    return best;
+    return ans[b].second;
 }
 
 set<string> Graph::BFL(string s, int d)
@@ -125,7 +96,7 @@ set<string> Graph::BFL(string s, int d)
     {
         for (string s : airports_visiting)
         {
-            for (auto e : nodes[s])
+            for (auto e : nodes[s].adj)
             {
                 if (!visited[e.get_target().get_code()])
                 {
