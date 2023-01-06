@@ -1,0 +1,8 @@
+# ninja log v5
+9	428	6947265084056725	CMakeFiles/transportes_aerios.dir/src/Flight.cpp.obj	cdd17cb7f34a4379
+7	431	6947265084056725	CMakeFiles/transportes_aerios.dir/src/Airport.cpp.obj	4a9bda1948d867b7
+5	434	6947265084111733	CMakeFiles/transportes_aerios.dir/src/Airline.cpp.obj	219bab7ad0268fba
+3	763	6947265087391724	CMakeFiles/transportes_aerios.dir/src/main.cpp.obj	77868b7646f456f9
+12	809	6947265087856733	CMakeFiles/transportes_aerios.dir/src/FlightManager.cpp.obj	a40284e6bc35f8b9
+0	907	6947265088831748	CMakeFiles/transportes_aerios.dir/src/Read.cpp.obj	998223197bf41d52
+16	932	6947265089086723	CMakeFiles/transportes_aerios.dir/src/IO.cpp.obj	31fea2b0732a4811
