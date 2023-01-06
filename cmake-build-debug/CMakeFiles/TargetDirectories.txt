@@ -1,3 +1,0 @@
-C:/Users/NASA/Desktop/transportes_aerios/cmake-build-debug/CMakeFiles/transportes_aerios.dir
-C:/Users/NASA/Desktop/transportes_aerios/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/NASA/Desktop/transportes_aerios/cmake-build-debug/CMakeFiles/rebuild_cache.dir
