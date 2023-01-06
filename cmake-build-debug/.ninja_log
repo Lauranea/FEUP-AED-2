@@ -6,9 +6,3 @@
 12	809	6947265087856733	CMakeFiles/transportes_aerios.dir/src/FlightManager.cpp.obj	a40284e6bc35f8b9
 0	907	6947265088831748	CMakeFiles/transportes_aerios.dir/src/Read.cpp.obj	998223197bf41d52
 16	932	6947265089086723	CMakeFiles/transportes_aerios.dir/src/IO.cpp.obj	31fea2b0732a4811
-5	603	6947298221640495	CMakeFiles/transportes_aerios.dir/src/main.cpp.obj	77868b7646f456f9
-9	631	6947298221910486	CMakeFiles/transportes_aerios.dir/src/FlightManager.cpp.obj	a40284e6bc35f8b9
-2	693	6947298222540470	CMakeFiles/transportes_aerios.dir/src/Read.cpp.obj	998223197bf41d52
-11	774	6947298223340477	CMakeFiles/transportes_aerios.dir/src/IO.cpp.obj	31fea2b0732a4811
-7	923	6947298224815474	CMakeFiles/transportes_aerios.dir/src/Graph.cpp.obj	64dfec7aa2b61b89
-923	1174	6947298227310477	transportes_aerios.exe	aa72101aa8633323

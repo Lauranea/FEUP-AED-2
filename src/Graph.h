@@ -9,7 +9,6 @@
 
 #include <iostream>
 #include <list>
-#include <math.h>
 #include <vector>
 #include <unordered_map>
 #include "Flight.h"
