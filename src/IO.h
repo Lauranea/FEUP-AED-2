@@ -17,6 +17,8 @@
 #include <unordered_map>
 #include "Read.h"
 #include <set>
+#include <istream>
+#include <sstream>  
 
 
 using namespace std;
@@ -32,9 +34,8 @@ using namespace std;
 class IO
 {
   private:
-    static void get_starting_point(FlightManager &fm);
-    static void get_ending_point(FlightManager &fm);
-    static void which_airlines_to_use(FlightManager &fm);
+    static pair<string, pair<float, float>> get_point(FlightManager &fm, string point_name);
+    static vector<string> which_airlines_to_use(FlightManager &fm);
 
     static void get_airport_info_1(FlightManager &fm);
     static void get_airport_info_2(FlightManager &fm);

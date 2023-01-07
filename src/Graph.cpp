@@ -48,7 +48,7 @@ float Graph::get_distance(float lat1, float lon1, float lat2, float lon2)
     return rad * c;
 }
  
-vector<string> Graph::BFS(string a, string b, unordered_map<string, Airport> airports)
+vector<string> Graph::BFS(string a, string b)
 {
     unordered_map<string, pair<int, vector<string>>> ans;
     ans[a] = {0, {}};

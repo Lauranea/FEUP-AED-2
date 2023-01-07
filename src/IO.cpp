@@ -36,40 +36,98 @@ bool IO::what_to_do(FlightManager &fm)
 
 void IO::find_optimal_path(FlightManager &fm)
 {
-    // Stating Point
-    cout << "---\n\nThe starting point is ...\n\n"
+    pair<string, pair<float, float>> start = get_point(fm, "starting");
+    if (start.first == "EXIT") return;
+    
+    pair<string, pair<float, float>> end = get_point(fm, "ending");
+    if (end.first == "EXIT") return;
+
+    vector<string> lines = which_airlines_to_use(fm);
+}
+
+pair<string, pair<float, float>> IO::get_point(FlightManager &fm, string point_name)
+{
+    cout << "---\n\nThe " << point_name << " point is ...\n\n"
             "1 - A certain Airport.\n"
             "2 - A certain City.\n"
             "3 - An Airport close to these coordinates\n" << endl;
     
-    int start_type = 0;
-    cin >> start_type;
+    int point_type = 0;
+    cin >> point_type;
 
-    string start;
-    float start_lat = 0;
-    float start_lon = 0;
+    string point = "";
+    float point_lat = 0; // Also stores if the point is an airport or a city
+    float point_lon = 0;
 
-    switch (start_type)
+    switch (point_type)
     {
         case 1:
             cout << "\nWhich Airport?\n" << endl;
-            cin >> start;
+            cin >> point;
+            point_lat = 0;
             break;
         case 2:
             cout << "\nWhich City?\n" << endl;
-            cin >> start;
+            cin >> point;
+            point_lat = 1;
             break;
         case 3:
             cout << "\nWhich Coordinates?\n" << endl;
             cout << "Latitude: ";
-            cin >> start_lat;
+            cin >> point_lat;
             cout << "Longitude: ";
-            cin >> start_lon;
+            cin >> point_lon;
             break;
         default:
             cout << RED << "\nInvalid choice\n" << RESET << endl;
-            return;
+            point = "EXIT";
+            break;
     }
+
+    return {point, {point_lat, point_lon}};
+}
+
+vector<string> which_airlines_to_use_aux()
+{
+    vector<string> lines;
+    string li;
+    cin >> li;
+    stringstream st(li);
+    string wo;
+    while (getline(st, wo, ';'))
+    {
+        lines.push_back(wo);
+    }
+    cout << lines.size() << endl;
+
+    return lines;
+}
+
+vector<string> IO::which_airlines_to_use(FlightManager &fm)
+{
+    vector<string> lines;
+
+    cout << "---\n\nUse these airlines:\n\n"
+            "1 - All\n"
+            "2 - Certain Airline(s)\n" << endl;
+    
+    int choice = 0;
+    cin >> choice;
+
+    switch (choice)
+    {
+        case 1:
+            break;
+        case 2:
+            cout << "---\n\nWhich Airlines?  (Separate multiple Airlines with a ;)\n" << endl;
+            lines = which_airlines_to_use_aux();
+        default:
+            cout << RED << "\nInvalid choice\n" << RESET << endl;
+            lines.push_back("EXIT");
+            break;
+    }
+
+    return lines;
 }
 
 void IO::get_airport_info(FlightManager &fm)

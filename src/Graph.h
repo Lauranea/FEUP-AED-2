@@ -33,9 +33,8 @@ class Graph
   
   public:
     Graph();
-    Graph(int v_);
     void addEdge(Airport src, Airport dest, Airline line, float weight); 
-    vector<string> BFS(string s, string f, unordered_map<string, Airport> airports); // Breadth First Search
+    vector<string> BFS(string s, string f); // Breadth First Search
     set<string> DFL(string s, int d); // Depth First Listing
     unordered_map<string, Node> nodes;
     static float get_distance(float lat1, float lon1, float lat2, float lon2);
