@@ -82,34 +82,28 @@ vector<string> Graph::BFS(string a, string b, unordered_map<string, Airport> air
     return ans[b].second;
 }
 
-set<string> Graph::BFL(string s, int d)
+
+void Graph::DFL_aux(string s, int d, set<string> &c)
 {
-    unordered_map<string, bool> visited;
-
-    set<string> airports_visited;
-    set<string> airports_visiting = {s};
-    set<string> temp;
-
-    visited[s] = true;
-
-    for (int i = 0; i < d; i++)
+    if (d == 0) return;
+    nodes[s].visited = true;
+    for (auto e : nodes[s].adj)
     {
-        for (string s : airports_visiting)
+        string u = e.get_target().get_code();
+        if (!nodes[u].visited)
         {
-            for (auto e : nodes[s].adj)
-            {
-                if (!visited[e.get_target().get_code()])
-                {
-                    temp.insert(e.get_target().get_code());
-                    visited[e.get_target().get_code()] = true;
-                }
-            }
-            airports_visited.insert(s);
-        }
-        for (string s : temp)
-        {
-            airports_visiting.insert(s);
+            c.insert(u);
+            DFL_aux(u, d-1, c);
         }
     }
-    return airports_visited;
+}
+
+set<string> Graph::DFL(string s, int d)
+{
+    for (auto &[key, value] : nodes) value.visited = false;
+
+    set<string> c;
+    DFL_aux(s, d, c);
+
+    return c;
 }

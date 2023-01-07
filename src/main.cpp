@@ -12,7 +12,11 @@ int main()
     FlightManager fm;
     fm.initialize();
 
-    IO::get_airport_info(fm);
+
+    while (!IO::what_to_do(fm))
+    {
+        cout << "----------------" << endl;
+    }
     
     return 0;
 }

@@ -21,9 +21,21 @@
 
 using namespace std;
 
+#define RESET "\033[0m"
+#define BOLDWHITE "\033[1m\033[37m"
+#define RED "\033[31m"
+#define VIMERR "\e[38;5;015m\e[48;2;255;0;0m"
+#define GREEN "\033[32m"
+#define BLUE "\033[34m"
+#define YELLOW "\033[33m"
+
 class IO
 {
   private:
+    static void find_optimal_path_1(FlightManager &fm);
+    static void find_optimal_path_2(FlightManager &fm);
+    static void find_optimal_path_3(FlightManager &fm);
+
     static void get_airport_info_1(FlightManager &fm);
     static void get_airport_info_2(FlightManager &fm);
     static void get_airport_info_3(FlightManager &fm);
@@ -32,7 +44,11 @@ class IO
     
 
   public:
+    static void find_optimal_path(FlightManager &fm);
+
     static void get_airport_info(FlightManager &fm);
+
+    static bool what_to_do(FlightManager &fm);
 
 
 };

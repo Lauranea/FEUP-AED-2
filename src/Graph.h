@@ -28,13 +28,14 @@ class Graph
       list<Flight> adj;
       bool visited;
     };
+    void DFL_aux(string s, int d, set<string> &c);
   
   public:
     Graph();
     Graph(int v_);
     void addEdge(Airport src, Airport dest, Airline line, float weight); 
     vector<string> BFS(string s, string f, unordered_map<string, Airport> airports); // Breadth First Search
-    set<string> BFL(string s, int d); // Breadth First Listing
+    set<string> DFL(string s, int d); // Depth First Listing
     unordered_map<string, Node> nodes;
     static float get_distance(float lat1, float lon1, float lat2, float lon2);
     // static int hash(string code);

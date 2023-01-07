@@ -5,9 +5,75 @@
 
 #include "IO.h"
 
-void IO::get_airport_info(FlightManager &fm)
+bool IO::what_to_do(FlightManager &fm)
 {
     cout << "\n"
+            "1 - Find the optimal flight.\n"
+            "2 - Get info about a certain airport.\n"
+            "\n"
+            "3 - Exit the program.\n" << endl;
+    
+    int choice = 0;
+    cin >> choice;
+
+    switch (choice)
+    {
+        case 1:
+
+            break;
+        case 2:
+            IO::get_airport_info(fm);
+            break;
+        case 3:
+            return true;
+        default:
+            cout << RED << "\nInvalid choice\n" << RESET << endl;
+            break;
+    }
+
+    return false;
+}
+
+void IO::find_optimal_path(FlightManager &fm)
+{
+    cout << "---\n\nThe starting point is ...\n\n"
+            "1 - A certain Airport.\n"
+            "2 - A certain City.\n"
+            "3 - An Airport close to these coordinates\n" << endl;
+    
+    int start_type = 0;
+    cin >> start_type;
+
+    string start;
+    float start_lat = 0;
+    float start_lon = 0;
+
+    switch (start_type)
+    {
+        case 1:
+            cout << "\nWhich Airport?\n" << endl;
+            cin >> start;
+            break;
+        case 2:
+            cout << "\nWhich City?\n" << endl;
+            cin >> start;
+            break;
+        case 3:
+            cout << "\nWhich Coordinates?\n" << endl;
+            cout << "Latitude: ";
+            cin >> start_lat;
+            cout << "Longitude: ";
+            cin >> start_lon;
+            break;
+        default:
+            cout << RED << "\nInvalid choice\n" << RESET << endl;
+            return;
+    }
+}
+
+void IO::get_airport_info(FlightManager &fm)
+{
+    cout << "---\n\n"
             "1 - How many flights start on a certain Airport?\n"
             "2 - How many Airlines operate on a certain Airport?\n"
             "3 - How many different Airports can you fly to from a certain Airport?\n"
@@ -35,7 +101,7 @@ void IO::get_airport_info(FlightManager &fm)
             get_airport_info_5(fm);
             break;
         default:
-            cout << "\nInvalid choice\n" << endl;
+            cout << RED << "\nInvalid choice\n" << RESET << endl;
             return;
     }
 }
@@ -46,7 +112,7 @@ void IO::get_airport_info_1(FlightManager &fm)
     string choice = "";
     cin >> choice;
     int sum = fm.get_flights().nodes[choice].adj.size();
-    cout << endl << sum << " flights start on this Airport\n" << endl;
+    cout << BOLDWHITE << endl << sum << " flights start on this Airport\n" << RESET << endl;
 }
 
 void IO::get_airport_info_2(FlightManager &fm)
@@ -61,7 +127,7 @@ void IO::get_airport_info_2(FlightManager &fm)
     {
         diferent_airlines.insert(p.get_airline().get_code());
     }
-    cout << endl << diferent_airlines.size() << " Airlines operate on this Airport\n" << endl;
+    cout << BOLDWHITE << endl << diferent_airlines.size() << " Airlines operate on this Airport\n" << RESET << endl;
 }
 
 void IO::get_airport_info_3(FlightManager &fm)
@@ -76,7 +142,7 @@ void IO::get_airport_info_3(FlightManager &fm)
     {
         different_airports.insert(p.get_target().get_code());
     }
-    cout << endl << "You can fly to " << different_airports.size() << " different Airports from this Airport\n" << endl;
+    cout << BOLDWHITE << endl << "You can fly to " << different_airports.size() << " different Airports from this Airport\n" << RESET << endl;
 }
 
 void IO::get_airport_info_4(FlightManager &fm)
@@ -91,7 +157,7 @@ void IO::get_airport_info_4(FlightManager &fm)
     {
         different_airports.insert(p.get_target().get_country());
     }
-    cout << endl << "You can fly to " << different_airports.size() << " different Countries from this Airport\n" << endl;
+    cout << BOLDWHITE << endl << "You can fly to " << different_airports.size() << " different Countries from this Airport\n" << RESET << endl;
 }
 
 void IO::get_airport_info_5(FlightManager &fm)
@@ -104,6 +170,6 @@ void IO::get_airport_info_5(FlightManager &fm)
     cin >> max;
     if (max > 0)
     {
-        cout << endl << "You can fly to " << fm.get_flights().BFL(choice, max+1).size() << " different Airports within " << max << " flights from this Airport\n" << endl;
+        cout << BOLDWHITE << endl << "You can fly to " << fm.get_flights().DFL(choice, max+1).size() << " different Airports within " << max << " flights from this Airport\n" << RESET << endl;
     }
 }
