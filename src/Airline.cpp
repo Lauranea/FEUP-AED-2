@@ -1,14 +1,26 @@
 /**
  * @file Airline.cpp
- * COMPLETAR!!!!
+ * Funções relacionadas com as airlines
  */
 
 #include "Airline.h"
 
+/**
+ * @brief Construtor de uma new Airline:: Airline object
+ * 
+ */
 Airline::Airline()
 {
 }
 
+/**
+ * @brief Construtor da airline
+ * 
+ * @param code_ codigo da airline
+ * @param name_ nome da airline
+ * @param callsign_ callsign da airline
+ * @param country_ país da airline
+ */
 Airline::Airline(string code_, string name_, string callsign_, string country_)
 {
     code = code_;
@@ -17,7 +29,3 @@ Airline::Airline(string code_, string name_, string callsign_, string country_)
     country = country_;
 }
 
-bool Airline::operator<(const Airline &a2) const
-{
-    return get_code() < a2.get_code();
-}

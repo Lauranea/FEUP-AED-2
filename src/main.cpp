@@ -1,12 +1,17 @@
 /**
  * @file main.cpp
- * COMPLETAR!!!!
+ * inicializa o flight manager e corre o loop do IO
  */
 
 #include <iostream>
 #include "FlightManager.h"
 #include "IO.h"
 
+
+/**
+ * @brief inicializa o flight manager e corre o loop do IO
+ * 
+ */
 int main()
 {
     FlightManager fm;

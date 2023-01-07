@@ -5,6 +5,13 @@
 
 #include "Read.h"
 
+
+/**
+ * @brief abre o ficheiro(verificando se existe) que contem a informação das airlines, e guarda a informação num  
+ * unordered_map 
+ * Complexidade: n 
+ * @return unordered_map<string, Airline> (string é o codigo da airline, airline contem todas as informaçoes desse aeroporto)
+ */
 unordered_map<string, Airline> Read::read_airlines()
 {
     unordered_map<string, Airline> v;
@@ -32,7 +39,12 @@ unordered_map<string, Airline> Read::read_airlines()
     return v;
 }
 
-
+/**
+ * @brief abre o ficheiro(verificando se existe) que contem a informação dos airport, e guarda a informação num  
+ * unordered_map 
+ * Complexidade: n 
+ * @return unordered_map<string, Airline> (string é o codigo do aeroporto, airport contem todas as informaçoes desse aeroporto)
+ */
 unordered_map<string, Airport> Read::read_airports()
 {
     unordered_map<string, Airport> v;
@@ -64,6 +76,14 @@ unordered_map<string, Airport> Read::read_airports()
     fi.close();
     return v;
 }
+
+/**
+ * @brief cria um grafo com cada edge a conter o aeroporto inicial, o aeroporto desttino, a airline e o peso(distancia)
+ * Complexidade: n
+ * @param airports unordered_map com informaçao dos aeroportos
+ * @param airlines unordered_map com informação das airlines
+ * @return Graph grafo com ligaçoes de aeroportos atraves de airlines
+ */
 
 Graph Read::read_flights(unordered_map<string, Airport> airports, unordered_map<string, Airline> airlines)
 {

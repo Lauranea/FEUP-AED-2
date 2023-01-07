@@ -1,6 +1,6 @@
 /**
  * @file Airport.h
- * Funções para ler ficheiros
+ * Funções relacionadas com os aeroportos
  */
 
 #ifndef _AIRPORT_H_
@@ -28,7 +28,6 @@ class Airport
     string get_country() const {return country;};
     float get_latitude() const {return latitude;};
     float get_longitude() const {return longitude;};
-    bool operator<(const Airport &a2) const;
 };
 
 #endif

@@ -1,6 +1,6 @@
 /**
  * @file Flight.h
- * Funções para ler ficheiros
+ * Funções relacionadas com os voos
  */
 
 #ifndef _FLIGHT_H_

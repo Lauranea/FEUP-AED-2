@@ -1,6 +1,6 @@
 /**
  * @file Airline.h
- * Funções para ler ficheiros
+ * Funções relacionadas com as airlines
  */
 
 #ifndef _AIRLINE_H_
@@ -24,7 +24,6 @@ class Airline
     string get_name() const {return name;};
     string get_callsign() const {return callsign;};
     string get_country() const {return country;};
-    bool operator<(const Airline &a2) const;
 };
 
 #endif

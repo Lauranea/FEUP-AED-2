@@ -1,6 +1,6 @@
 /**
  * @file FlightManager.h
- * Funções para ler ficheiros
+ * Informaçao de todas as airlines, airports, e voos(grafos)
  */
 
 #ifndef _FLIGHTMANAGER_H_
