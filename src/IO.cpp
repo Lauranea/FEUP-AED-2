@@ -45,6 +45,7 @@ void IO::find_optimal_path(FlightManager &fm)
     if (end.first == "EXIT") return;
 
     vector<string> lines = which_airlines_to_use(fm);
+    if (lines.size() == 1 && lines[0] == "EXIT") return;
 
     cout << "\n---\n\n1 - Min number of flights\n"
                      "2 - Min distance\n" << endl;
@@ -59,11 +60,11 @@ void IO::find_optimal_path(FlightManager &fm)
         return;
     }
 
-    if (start.first != "" && end.first != "" && lines.size() == 0)
+    if (start.first != "" && end.first != "")
     {
         if (start.second.first == 0)
         {
-            optimal = fm.get_flights().BFS(start.first, end.first, min_what, end.second.first).second;
+            optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, end.second.first).second;
         }
         else
         {
@@ -73,7 +74,7 @@ void IO::find_optimal_path(FlightManager &fm)
             {
                 if (value.get_city() == start.first)
                 {
-                    pair<int, vector<string>> opt = fm.get_flights().BFS(start.first, end.first, min_what, end.second.first);
+                    pair<int, vector<string>> opt = fm.get_flights().BFS(start.first, end.first, min_what, lines, end.second.first);
                     if (opt.first < current_optimal_weight)
                     {
                         current_optimal = opt.second;
@@ -83,14 +84,14 @@ void IO::find_optimal_path(FlightManager &fm)
             optimal = current_optimal;
         }
     }
-    else if (start.first != "" && end.first == "" && end.second.second != 0 && lines.size() == 0)
+    else if (start.first != "" && end.first == "" && end.second.second != 0)
     {
         cout << "\nMax distance from target coordinates?" << endl;
         float max_distance = 0;
         cin >> max_distance;
-        optimal = fm.get_flights().BFS(start.first, end.first, min_what, 2, end.second.first, end.second.second, max_distance).second;
+        optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, 2, end.second.first, end.second.second, max_distance).second;
     }
-    else if (start.first == "" && end.first != "" && start.second.first != 0 && lines.size() == 0)
+    else if (start.first == "" && end.first != "" && start.second.first != 0)
     {
         cout << "\nMax distance from starting coordinates?" << endl;
         float max_distance = 0;
@@ -101,7 +102,7 @@ void IO::find_optimal_path(FlightManager &fm)
         {
             if (Graph::get_distance(value.get_latitude(), value.get_longitude(), start.second.first, start.second.second) <= max_distance)
             {
-                pair<int, vector<string>> opt = fm.get_flights().BFS(key, end.first, min_what, end.second.first);
+                pair<int, vector<string>> opt = fm.get_flights().BFS(key, end.first, min_what, lines, end.second.first);
                 if (opt.first < current_optimal_weight)
                 {
                     current_optimal = opt.second;
@@ -110,7 +111,7 @@ void IO::find_optimal_path(FlightManager &fm)
         }
         optimal = current_optimal;
     }
-    else if (start.first == "" && end.first == "" && end.second.first != 0 && start.second.first != 0 && lines.size() == 0)
+    else if (start.first == "" && end.first == "" && end.second.first != 0 && start.second.first != 0)
     {
         cout << "\nMax distance from starting coordinates?" << endl;
         float max_distance_start = 0;
@@ -124,7 +125,7 @@ void IO::find_optimal_path(FlightManager &fm)
         {
             if (Graph::get_distance(value.get_latitude(), value.get_longitude(), start.second.first, start.second.second) <= max_distance_start)
             {
-                pair<int, vector<string>> opt = fm.get_flights().BFS(key, end.first, min_what, 2, end.second.first, end.second.second, max_distance_end);
+                pair<int, vector<string>> opt = fm.get_flights().BFS(key, end.first, min_what, lines, 2, end.second.first, end.second.second, max_distance_end);
                 if (opt.first < current_optimal_weight)
                 {
                     current_optimal = opt.second;

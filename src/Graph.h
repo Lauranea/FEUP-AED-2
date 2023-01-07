@@ -38,7 +38,7 @@ class Graph
     Graph();
     Graph(unordered_map<string, Airport> airports_, unordered_map<string, Airline> airlines_);
     void addEdge(Airport src, Airport dest, Airline line, float weight); 
-    pair<int, vector<string>> BFS(string a, string b, bool use_weight = false, int b_type = 0, float b_lat = 0, float b_lon = 0, float max_distance = 0); // Breadth First Search
+    pair<int, vector<string>> BFS(string a, string b, bool use_weight = false, vector<string> lines = {}, int b_type = 0, float b_lat = 0, float b_lon = 0, float max_distance = 0); // Breadth First Search
     set<string> DFL(string s, int d); // Depth First Listing
     unordered_map<string, Node> nodes;
     static float get_distance(float lat1, float lon1, float lat2, float lon2);

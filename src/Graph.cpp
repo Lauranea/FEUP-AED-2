@@ -53,7 +53,7 @@ float Graph::get_distance(float lat1, float lon1, float lat2, float lon2)
     return rad * c;
 }
  
-pair<int, vector<string>> Graph::BFS(string a, string b, bool use_weight, int b_type, float b_lat, float b_lon, float max_distance) // b_type = (0 Airport) / (1 City) / 2 (Coords)
+pair<int, vector<string>> Graph::BFS(string a, string b, bool use_weight, vector<string> lines, int b_type, float b_lat, float b_lon, float max_distance) // b_type = (0 Airport) / (1 City) / 2 (Coords)
 {
     unordered_map<string, pair<int, vector<string>>> ans;
     ans[a] = {0, {a}};
@@ -74,7 +74,8 @@ pair<int, vector<string>> Graph::BFS(string a, string b, bool use_weight, int b_
         {
             string w = e.get_target().get_code();
             float weight = use_weight ? e.get_weight() : 1;
-            if (!nodes[w].visited || ans[q.front()].first + weight < ans[w].first)
+            auto lambda = [](string current_line, vector<string> list_of_lines) { for (int i = 0; i < list_of_lines.size(); i++) { if (current_line == list_of_lines[i]) return true; } return false; };
+            if ((!nodes[w].visited || ans[q.front()].first + weight < ans[w].first) && (lines.size() == 0 || lambda(e.get_airline().get_code(), lines)))
             {
                 ans[w] = {ans[q.front()].first + weight, ans[q.front()].second};
                 ans[w].second.push_back(e.get_target().get_code());
