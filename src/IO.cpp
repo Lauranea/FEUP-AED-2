@@ -19,7 +19,7 @@ bool IO::what_to_do(FlightManager &fm)
     switch (choice)
     {
         case 1:
-
+            IO::find_optimal_path(fm);
             break;
         case 2:
             IO::get_airport_info(fm);
@@ -36,6 +36,7 @@ bool IO::what_to_do(FlightManager &fm)
 
 void IO::find_optimal_path(FlightManager &fm)
 {
+    // Stating Point
     cout << "---\n\nThe starting point is ...\n\n"
             "1 - A certain Airport.\n"
             "2 - A certain City.\n"

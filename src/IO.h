@@ -32,9 +32,9 @@ using namespace std;
 class IO
 {
   private:
-    static void find_optimal_path_1(FlightManager &fm);
-    static void find_optimal_path_2(FlightManager &fm);
-    static void find_optimal_path_3(FlightManager &fm);
+    static void get_starting_point(FlightManager &fm);
+    static void get_ending_point(FlightManager &fm);
+    static void which_airlines_to_use(FlightManager &fm);
 
     static void get_airport_info_1(FlightManager &fm);
     static void get_airport_info_2(FlightManager &fm);
