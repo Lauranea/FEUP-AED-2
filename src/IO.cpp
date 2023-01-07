@@ -8,7 +8,7 @@
 bool IO::what_to_do(FlightManager &fm)
 {
     cout << "\n"
-            "1 - Find the optimal flight.\n"
+            "1 - Find the optimal flights.\n"
             "2 - Get info about a certain airport.\n"
             "\n"
             "3 - Exit the program.\n" << endl;
@@ -43,6 +43,11 @@ void IO::find_optimal_path(FlightManager &fm)
     if (end.first == "EXIT") return;
 
     vector<string> lines = which_airlines_to_use(fm);
+
+    if (start.first == "" && start.second.first == 0 && end.first == "" && end.second.first == 0 && lines.size() == 0)
+    {
+        fm.get_flights().BFS(start.first, end.first);
+    }
 }
 
 pair<string, pair<float, float>> IO::get_point(FlightManager &fm, string point_name)
@@ -121,6 +126,7 @@ vector<string> IO::which_airlines_to_use(FlightManager &fm)
         case 2:
             cout << "---\n\nWhich Airlines?  (Separate multiple Airlines with a ;)\n" << endl;
             lines = which_airlines_to_use_aux();
+            break;
         default:
             cout << RED << "\nInvalid choice\n" << RESET << endl;
             lines.push_back("EXIT");
