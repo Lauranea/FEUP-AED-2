@@ -19,6 +19,7 @@
 #include <set>
 #include <istream>
 #include <sstream>  
+#include <climits>
 
 
 using namespace std;

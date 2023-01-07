@@ -87,7 +87,7 @@ unordered_map<string, Airport> Read::read_airports()
 
 Graph Read::read_flights(unordered_map<string, Airport> airports, unordered_map<string, Airline> airlines)
 {
-    Graph v;
+    Graph v(airports, airlines);
     ifstream fi;
     fi.open("../dados/flights.csv");
     if (!fi.is_open())

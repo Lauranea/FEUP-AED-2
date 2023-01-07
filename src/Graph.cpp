@@ -5,9 +5,14 @@
 
 #include "Graph.h"
 
+Graph::Graph(unordered_map<string, Airport> airports_, unordered_map<string, Airline> airlines_)
+{
+    airports = airports_;
+    airlines = airlines_;
+}
+
 Graph::Graph()
 {
-    // nodes.resize(18278);
 }
 
 // int Graph::hash(string code)
@@ -48,10 +53,10 @@ float Graph::get_distance(float lat1, float lon1, float lat2, float lon2)
     return rad * c;
 }
  
-vector<string> Graph::BFS(string a, string b)
+pair<int, vector<string>> Graph::BFS(string a, string b, bool use_weight, int b_type, float b_lat, float b_lon, float max_distance) // b_type = (0 Airport) / (1 City) / 2 (Coords)
 {
     unordered_map<string, pair<int, vector<string>>> ans;
-    ans[a] = {0, {}};
+    ans[a] = {0, {a}};
 
     for (auto &[key, value] : nodes) value.visited = false; // c++17 flex
 
@@ -59,7 +64,7 @@ vector<string> Graph::BFS(string a, string b)
     q.push(a);
     nodes[a].visited = true;
 
-    if (a == b)
+    if ((b_type == 0 && a == b) || (b_type == 1 && airports[a].get_city() == b) || (b_type == 2 && Graph::get_distance(airports[a].get_latitude(), airports[a].get_longitude(), b_lat, b_lon) <= max_distance))
     {
         return {};
     }
@@ -68,9 +73,10 @@ vector<string> Graph::BFS(string a, string b)
         for (auto e : nodes[q.front()].adj)
         {
             string w = e.get_target().get_code();
-            if (!nodes[w].visited || ans[q.front()].first + e.get_weight() < ans[w].first)
+            float weight = use_weight ? e.get_weight() : 1;
+            if (!nodes[w].visited || ans[q.front()].first + weight < ans[w].first)
             {
-                ans[w] = {ans[q.front()].first + e.get_weight(), ans[q.front()].second};
+                ans[w] = {ans[q.front()].first + weight, ans[q.front()].second};
                 ans[w].second.push_back(e.get_target().get_code());
                 q.push(w);
                 nodes[w].visited = true;
@@ -78,8 +84,35 @@ vector<string> Graph::BFS(string a, string b)
         }
         q.pop();
     }
-
-    return ans[b].second;
+    
+    if (b_type == 0)
+    {
+        return ans[b];
+    }
+    else if (b_type == 1)
+    {
+        string fastest;
+        for (auto &[key, value] : airports)
+        {
+            if (value.get_city() == b && (fastest == "" || ans[value.get_code()] < ans[fastest]))
+            {
+                fastest = value.get_code();
+            }
+        }
+        return ans[fastest];
+    }
+    else
+    {
+        string fastest;
+        for (auto &[key, value] : airports)
+        {
+            if ((fastest == "" || ans[value.get_code()] < ans[fastest]) && Graph::get_distance(value.get_latitude(), value.get_longitude(), b_lat, b_lon) <= max_distance)
+            {
+                fastest = value.get_code();
+            }
+        }
+        return ans[fastest];
+    }
 }
 
 
