@@ -43,12 +43,17 @@ class IO
     static void get_airport_info_3(FlightManager &fm);
     static void get_airport_info_4(FlightManager &fm);
     static void get_airport_info_5(FlightManager &fm);
+
+    static void get_country_info_1(FlightManager &fm);
+    static void get_country_info_2(FlightManager &fm);
     
 
   public:
     static void find_optimal_path(FlightManager &fm);
 
     static void get_airport_info(FlightManager &fm);
+
+    static void get_country_info(FlightManager &fm);
 
     static bool what_to_do(FlightManager &fm);
 

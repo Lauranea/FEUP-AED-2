@@ -34,8 +34,9 @@ bool IO::what_to_do(FlightManager &fm)
     cout << "\n"
             "1 - Find the optimal flights.\n"
             "2 - Get info about a certain airport.\n"
+            "3 - Get info about a certain country.\n"
             "\n"
-            "3 - Exit the program.\n" << endl;
+            "4 - Exit the program.\n" << endl;
     
     int choice = 0;
     choice = cin_int();
@@ -49,6 +50,9 @@ bool IO::what_to_do(FlightManager &fm)
             IO::get_airport_info(fm);
             break;
         case 3:
+            IO::get_country_info(fm);
+            break;
+        case 4:
             return true;
         default:
             cout << RED << "\nInvalid choice\n" << RESET << endl;
@@ -258,7 +262,7 @@ void IO::get_airport_info(FlightManager &fm)
             "2 - How many Airlines operate on a certain Airport?\n"
             "3 - How many different Airports can you fly to from a certain Airport?\n"
             "4 - How many different Countries can you fly to from a certain Airport?\n"
-            "5 - How many different places can you fly to from from a certain Airport in X flights max?\n" << endl;
+            "5 - How many different places can you fly to from a certain Airport in X flights max?\n" << endl;
     
     int choice = 0;
     choice = cin_int();
@@ -352,4 +356,81 @@ void IO::get_airport_info_5(FlightManager &fm)
     {
         cout << BOLDWHITE << endl << "You can fly to " << fm.get_flights().DFL(choice, max+1).size() << " different Airports within " << max << " flights from this Airport\n" << RESET << endl;
     }
+}
+
+void IO::get_country_info(FlightManager &fm)
+{
+    cout << "---\n\n"
+            "1 - How many flights start on a certain Country?\n"
+            "2 - How many Airlines operate on a certain Country?\n"
+            "3 - How many different Airports can you fly to from a certain Country?\n"
+            "4 - How many different Countries can you fly to from a certain Country?\n"
+            "5 - How many different places can you fly to from a certain Country in X flights max?\n" << endl;
+    
+    int choice = 0;
+    choice = cin_int();
+
+    switch (choice)
+    {
+        case 1:
+            get_country_info_1(fm);
+            break;
+        case 2:
+            get_country_info_2(fm);
+            break;
+        case 3:
+            get_airport_info_3(fm);
+            break;
+        case 4:
+            get_airport_info_4(fm);
+            break;
+        case 5:
+            get_airport_info_5(fm);
+            break;
+        default:
+            cout << RED << "\nInvalid choice\n" << RESET << endl;
+            return;
+    }
+}
+
+void IO::get_country_info_1(FlightManager &fm)
+{
+    cout << "\nWhich Country?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    bool found = false;
+    int sum = 0;
+    for(auto i : fm.get_flights().nodes)
+    {
+        if(fm.get_airports()[i.first].get_country() == choice)
+        {
+            sum += i.second.adj.size();
+            found = true;
+        }
+    }
+    if(found)
+    {
+        cout << BOLDWHITE << endl << sum << " flights start on this Airport\n" << RESET << endl;
+        return;
+    }
+    cout << RED << endl << choice << " is not an available country.\n" << RESET << endl;
+}
+
+void IO::get_country_info_2(FlightManager &fm)
+{
+    cout << "\nWhich Airport?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    int sum = 0;
+    bool found = false;
+    set<string> diferent_airlines;
+    for(auto i : fm.get_flights().nodes)
+    {
+        if(fm.get_airports()[i.first].get_country() == choice)
+        {
+            diferent_airlines.insert(i.first);
+            found = true;
+        }
+    }
+    cout << BOLDWHITE << endl << diferent_airlines.size() << " Airlines operate on this Airport\n" << RESET << endl;
 }
