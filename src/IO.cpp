@@ -62,10 +62,10 @@ void IO::find_optimal_path(FlightManager &fm)
 {
     vector<string> optimal;
 
-    pair<string, pair<float, float>> start = get_point(fm, "starting");
+    pair<string, pair<float, pair<float, float>>> start = get_point(fm, "starting");
     if (start.first == "EXIT") return;
     
-    pair<string, pair<float, float>> end = get_point(fm, "ending");
+    pair<string, pair<float, pair<float, float>>> end = get_point(fm, "ending");
     if (end.first == "EXIT") return;
 
     vector<string> lines = which_airlines_to_use(fm);
@@ -86,9 +86,9 @@ void IO::find_optimal_path(FlightManager &fm)
 
     if (start.first != "" && end.first != "")
     {
-        if (start.second.first == 0)
+        if (start.second.second.first == 0)
         {
-            optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, end.second.first).second;
+            optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, end.second.second.first).second;
         }
         else
         {
@@ -98,7 +98,7 @@ void IO::find_optimal_path(FlightManager &fm)
             {
                 if (value.get_city() == start.first)
                 {
-                    pair<int, vector<string>> opt = fm.get_flights().BFS(start.first, end.first, min_what, lines, end.second.first);
+                    pair<int, vector<string>> opt = fm.get_flights().BFS(start.first, end.first, min_what, lines, end.second.second.first);
                     if (opt.first < current_optimal_weight)
                     {
                         current_optimal = opt.second;
@@ -108,25 +108,19 @@ void IO::find_optimal_path(FlightManager &fm)
             optimal = current_optimal;
         }
     }
-    else if (start.first != "" && end.first == "" && end.second.second != 0)
+    else if (start.first != "" && end.first == "" && end.second.second.second != 0)
     {
-        cout << "\nMax distance from target coordinates?" << endl;
-        float max_distance = 0;
-        max_distance = cin_float();
-        optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, 2, end.second.first, end.second.second, max_distance).second;
+        optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, 2, end.second.second.first, end.second.second.second, start.second.first).second;
     }
-    else if (start.first == "" && end.first != "" && start.second.first != 0)
+    else if (start.first == "" && end.first != "" && start.second.second.first != 0)
     {
-        cout << "\nMax distance from starting coordinates?" << endl;
-        float max_distance = 0;
-        max_distance = cin_float();
         vector<string> current_optimal;
         int current_optimal_weight = INT_MAX;
         for (auto &[key, value] : fm.get_airports())
         {
-            if (Graph::get_distance(value.get_latitude(), value.get_longitude(), start.second.first, start.second.second) <= max_distance)
+            if (Graph::get_distance(value.get_latitude(), value.get_longitude(), start.second.second.first, start.second.second.second) <= start.second.first)
             {
-                pair<int, vector<string>> opt = fm.get_flights().BFS(key, end.first, min_what, lines, end.second.first);
+                pair<int, vector<string>> opt = fm.get_flights().BFS(key, end.first, min_what, lines, end.second.second.first);
                 if (opt.first < current_optimal_weight)
                 {
                     current_optimal = opt.second;
@@ -135,21 +129,15 @@ void IO::find_optimal_path(FlightManager &fm)
         }
         optimal = current_optimal;
     }
-    else if (start.first == "" && end.first == "" && end.second.first != 0 && start.second.first != 0)
+    else if (start.first == "" && end.first == "" && end.second.second.first != 0 && start.second.second.first != 0)
     {
-        cout << "\nMax distance from starting coordinates?" << endl;
-        float max_distance_start = 0;
-        max_distance_start = cin_float();
-        cout << "\nMax distance from target coordinates?" << endl;
-        float max_distance_end = 0;
-        max_distance_end = cin_float();
         vector<string> current_optimal;
         int current_optimal_weight = INT_MAX;
         for (auto &[key, value] : fm.get_airports())
         {
-            if (Graph::get_distance(value.get_latitude(), value.get_longitude(), start.second.first, start.second.second) <= max_distance_start)
+            if (Graph::get_distance(value.get_latitude(), value.get_longitude(), start.second.second.first, start.second.second.second) <= start.second.first)
             {
-                pair<int, vector<string>> opt = fm.get_flights().BFS(key, end.first, min_what, lines, 2, end.second.first, end.second.second, max_distance_end);
+                pair<int, vector<string>> opt = fm.get_flights().BFS(key, end.first, min_what, lines, 2, end.second.second.first, end.second.second.second, end.second.first);
                 if (opt.first < current_optimal_weight)
                 {
                     current_optimal = opt.second;
@@ -171,10 +159,10 @@ void IO::find_optimal_path(FlightManager &fm)
             cout << optimal[i] << " -> ";
         }
     }
-    cout << RESET << endl;
+    cout << RESET << endl << endl;
 }
 
-pair<string, pair<float, float>> IO::get_point(FlightManager &fm, string point_name)
+pair<string, pair<float, pair<float, float>>>  IO::get_point(FlightManager &fm, string point_name)
 {
     cout << "---\n\nThe " << point_name << " point is ...\n\n"
             "1 - A certain Airport.\n"
@@ -187,6 +175,7 @@ pair<string, pair<float, float>> IO::get_point(FlightManager &fm, string point_n
     string point = "";
     float point_lat = 0; // Also stores if the point is an airport or a city
     float point_lon = 0;
+    float max_distance = 0;
 
     switch (point_type)
     {
@@ -206,6 +195,8 @@ pair<string, pair<float, float>> IO::get_point(FlightManager &fm, string point_n
             point_lat = cin_float();
             cout << "Longitude: ";
             point_lon = cin_float();
+            cout << "Max Distance: ";
+            max_distance = cin_float();
             break;
         default:
             cout << RED << "\nInvalid choice\n" << RESET << endl;
@@ -213,7 +204,7 @@ pair<string, pair<float, float>> IO::get_point(FlightManager &fm, string point_n
             break;
     }
 
-    return {point, {point_lat, point_lon}};
+    return {point, {max_distance, {point_lat, point_lon}}};
 }
 
 vector<string> which_airlines_to_use_aux()

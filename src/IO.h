@@ -35,7 +35,7 @@ using namespace std;
 class IO
 {
   private:
-    static pair<string, pair<float, float>> get_point(FlightManager &fm, string point_name);
+    static pair<string, pair<float, pair<float, float>>> get_point(FlightManager &fm, string point_name);
     static vector<string> which_airlines_to_use(FlightManager &fm);
 
     static void get_airport_info_1(FlightManager &fm);
