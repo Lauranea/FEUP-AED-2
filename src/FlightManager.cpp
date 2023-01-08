@@ -7,7 +7,7 @@
 
 /**
  * @brief inicializa a class FlightManager que  chamar o Read para guardar a informaçao de todos os airports, airlines e voos
- * 
+ * Complexidade: 1
  */
 void FlightManager::initialize()
 {

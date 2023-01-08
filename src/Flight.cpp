@@ -15,7 +15,7 @@ Flight::Flight()
 
 /**
  * @brief Construtor de um Flight
- * 
+ * Complexidade: 1
  * @param source_ de onde o voo parte
  * @param target_ destino do voo
  * @param airline_ airline do voo

@@ -1,6 +1,6 @@
 /**
  * @file Graph.h
- * Funções para ler ficheiros
+ * Funções relacionadas com o grafo
  */
 
 #ifndef _GRAPH_H_

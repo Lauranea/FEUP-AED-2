@@ -1,16 +1,26 @@
 /**
  * @file Graph.cpp
- * COMPLETAR!!!!
+ * Funções relacionadas com o grafo
  */
 
 #include "Graph.h"
 
+/**
+ * @brief Contrutor do Grafo
+ * Complexidade 1
+ * @param airports_ unordered_map com informação dos airports
+ * @param airlines_ unordered_map com informação das lines
+ */
 Graph::Graph(unordered_map<string, Airport> airports_, unordered_map<string, Airline> airlines_)
 {
     airports = airports_;
     airlines = airlines_;
 }
 
+/**
+ * @brief Construtor de new Graph:: Graph object
+ * 
+ */
 Graph::Graph()
 {
 }
@@ -32,11 +42,29 @@ Graph::Graph()
 //     return converted;
 // }
  
+ /**
+  * @brief adiciona uma edge ao grafo 
+  * Complexidade: 1
+  * 
+  * @param src airoporto de onde o voo parte
+  * @param dest airoporto destino do voo
+  * @param line airline do voo
+  * @param weight distancia dos aeroportos
+  */
 void Graph::addEdge(Airport src, Airport dest, Airline line, float weight)
 {
     nodes[src.get_code()].adj.push_back(Flight(src, dest, line, weight));
 }
 
+/**
+ * @brief devolve a distancia entre 2 aeroportos
+ * Complexidade 1
+ * @param lat1 latitude do aeroporto 1
+ * @param lon1 longitude do aeroporto 1
+ * @param lat2 latitude do aeroporto 2
+ * @param lon2 longitude do aeroporto 2
+ * @return float distancia entre os dois aeroportos
+ */
 float Graph::get_distance(float lat1, float lon1, float lat2, float lon2)
 {
     float dLat = (lat2 - lat1) * M_PI / 180.0;
@@ -116,7 +144,13 @@ pair<int, vector<string>> Graph::BFS(string a, string b, bool use_weight, vector
     }
 }
 
-
+/**
+ * @brief dfs que adiciona ao set 
+ * Compelxidade |V+d|
+ * @param s aeroporto inicial
+ * @param d depth no momento
+ * @param c todos os aeroportos em d voos
+ */
 void Graph::DFL_aux(string s, int d, set<string> &c)
 {
     if (d == 0) return;
@@ -132,6 +166,13 @@ void Graph::DFL_aux(string s, int d, set<string> &c)
     }
 }
 
+/**
+ * @brief devolve todos os aeroportos a uma distancia de d voos do aeroporto original
+ * Complexidade:|V|
+ * @param s aeroporto inicial
+ * @param d quantidade de voos
+ * @return set<string> set com os aeroportos a que da para chegar a partir de s com d voos
+ */
 set<string> Graph::DFL(string s, int d)
 {
     for (auto &[key, value] : nodes) value.visited = false;
