@@ -64,7 +64,7 @@ pair<int, vector<string>> Graph::BFS(string a, string b, bool use_weight, vector
     q.push(a);
     nodes[a].visited = true;
 
-    if ((b_type == 0 && a == b) || (b_type == 1 && airports[a].get_city() == b) || (b_type == 2 && Graph::get_distance(airports[a].get_latitude(), airports[a].get_longitude(), b_lat, b_lon) <= max_distance))
+    if ((b_type == 0 && a == b) || (b_type == 1 && airports[a].get_city() == b) || (b_type == 2 && Graph::get_distance(airports[a].get_latitude(), airports[a].get_longitude(), b_lat, b_lon) >= max_distance))
     {
         return {};
     }
