@@ -1,6 +1,6 @@
 /**
  * @file IO.h
- * Funções relacionadas com o interface I/O
+ * Funções relacionadas com a interface
  */
 
 #ifndef _IO_H_

@@ -78,11 +78,11 @@ unordered_map<string, Airport> Read::read_airports()
 }
 
 /**
- * @brief cria um grafo com cada edge a conter o aeroporto inicial, o aeroporto desttino, a airline e o peso(distancia)
+ * @brief cria um grafo com cada edge a conter o aeroporto inicial, o aeroporto destino, a airline e o peso(distancia)
  * Complexidade: n
  * @param airports unordered_map com informaçao dos aeroportos
  * @param airlines unordered_map com informação das airlines
- * @return Graph grafo com ligaçoes de aeroportos atraves de airlines
+ * @return Graph grafo com ligações de aeroportos através de airlines
  */
 
 Graph Read::read_flights(unordered_map<string, Airport> airports, unordered_map<string, Airline> airlines)

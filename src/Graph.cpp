@@ -145,7 +145,7 @@ pair<int, vector<string>> Graph::BFS(string a, string b, bool use_weight, vector
 }
 
 /**
- * @brief dfs que adiciona ao set 
+ * @brief dfs que adiciona ao set os aeorportos em que e possivel voar de s para em d voos
  * Compelxidade |V+d|
  * @param s aeroporto inicial
  * @param d depth no momento

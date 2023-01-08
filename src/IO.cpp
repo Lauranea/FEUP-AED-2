@@ -1,10 +1,15 @@
 /**
  * @file IO.cpp
- * COMPLETAR!!!!
+ * Funções relacionadas com a interface
  */
 
 #include "IO.h"
 
+/**
+ * @brief Recebe a escolha do utilizador
+ * Complexidade: 1
+ * @return int devolve a escolha do utilizador
+ */
 int IO::cin_int()
 {
     int choice = 0;
@@ -17,6 +22,11 @@ int IO::cin_int()
     return choice;
 }
 
+/**
+ * @brief Recebe a escolha do utilizador da distancia pretendida
+ * Complexidade: 1
+ * @return float devolve a escolha do utilizador da distancia
+ */
 float IO::cin_float()
 {
     float choice = 0;
@@ -29,6 +39,13 @@ float IO::cin_float()
     return choice;
 }
 
+/**
+ * @brief mostra no terminal as opçoes para o utilizador escolher
+ * Complexidade: 1
+ * @param fm 
+ * @return true sai do programa
+ * @return false 
+ */
 bool IO::what_to_do(FlightManager &fm)
 {
     cout << "\n"
@@ -70,6 +87,11 @@ bool IO::what_to_do(FlightManager &fm)
     return false;
 }
 
+/**
+ * @brief encontra o caminho mais eficaz de acordo com a escolha do utilizador
+ * Average Complexity: |V+E|
+ * @param fm 
+ */
 void IO::find_optimal_path(FlightManager &fm)
 {
     vector<string> optimal;
@@ -174,6 +196,13 @@ void IO::find_optimal_path(FlightManager &fm)
     cout << RESET << endl << endl;
 }
 
+/**
+ * @brief vai buscar o caminho optimal, para um aeroporto, para uma cidade, ou para umas coordenadas
+ * Complexidade: 1
+ * @param fm 
+ * @param point_name start ou end
+ * @return pair<string, pair<float, pair<float, float>>> devolve o caminho optimal 
+ */
 pair<string, pair<float, pair<float, float>>>  IO::get_point(FlightManager &fm, string point_name)
 {
     cout << "---\n\nThe " << point_name << " point is ...\n\n"
@@ -219,6 +248,11 @@ pair<string, pair<float, pair<float, float>>>  IO::get_point(FlightManager &fm, 
     return {point, {max_distance, {point_lat, point_lon}}};
 }
 
+/**
+ * @brief torna as airlines que o user escolheu num vetor
+ * Complexidade:1 
+ * @return vector<string> todas as airlines 
+ */
 vector<string> which_airlines_to_use_aux()
 {
     vector<string> lines;
@@ -235,6 +269,12 @@ vector<string> which_airlines_to_use_aux()
     return lines;
 }
 
+/**
+ * @brief da ao user a opçao de escolher quais airlines quer escolher 
+ * Complexidade: 1
+ * @param fm 
+ * @return vector<string> airlines que o user quer usar 
+ */
 vector<string> IO::which_airlines_to_use(FlightManager &fm)
 {
     vector<string> lines;
@@ -263,6 +303,12 @@ vector<string> IO::which_airlines_to_use(FlightManager &fm)
     return lines;
 }
 
+/**
+ * @brief da ao user a opção de escolher qual a informação que pretende de um dado aeroporto
+ * complexidade:1
+ * 
+ * @param fm 
+ */
 void IO::get_airport_info(FlightManager &fm)
 {
     cout << "---\n\n"
@@ -298,6 +344,11 @@ void IO::get_airport_info(FlightManager &fm)
     }
 }
 
+/**
+ * @brief quantos voos someçam num aeroporto
+ * Complexidade:1
+ * @param fm 
+ */
 void IO::get_airport_info_1(FlightManager &fm)
 {
     cout << "\nWhich Airport?\n" << endl;
@@ -307,6 +358,11 @@ void IO::get_airport_info_1(FlightManager &fm)
     cout << BOLDWHITE << endl << sum << " flights start on this Airport\n" << RESET << endl;
 }
 
+/**
+ * @brief quantas airlines diferentes operam no aearoporto
+ * Complexidade: 1
+ * @param fm 
+ */
 void IO::get_airport_info_2(FlightManager &fm)
 {
     cout << "\nWhich Airport?\n" << endl;
@@ -322,6 +378,11 @@ void IO::get_airport_info_2(FlightManager &fm)
     cout << BOLDWHITE << endl << diferent_airlines.size() << " Airlines operate on this Airport\n" << RESET << endl;
 }
 
+/**
+ * @brief para quantos aeroportos pode se voar a partir do aeroporto
+ * Complexidade |V|
+ * @param fm 
+ */
 void IO::get_airport_info_3(FlightManager &fm)
 {
     cout << "\nWhich Airport?\n" << endl;
@@ -337,6 +398,11 @@ void IO::get_airport_info_3(FlightManager &fm)
     cout << BOLDWHITE << endl << "You can fly to " << different_airports.size() << " different Airports from this Airport\n" << RESET << endl;
 }
 
+/**
+ * @brief para quantos paises diferentes se pode voar a partir do aeroporto
+ * Complexidade: |V|
+ * @param fm 
+ */
 void IO::get_airport_info_4(FlightManager &fm)
 {
     cout << "\nWhich Airport?\n" << endl;
@@ -352,6 +418,11 @@ void IO::get_airport_info_4(FlightManager &fm)
     cout << BOLDWHITE << endl << "You can fly to " << different_airports.size() << " different Countries from this Airport\n" << RESET << endl;
 }
 
+/**
+ * @brief para quantos sitios se pode voar para a partir do aeroporto em x voos
+ * Complexidade: 1
+ * @param fm 
+ */
 void IO::get_airport_info_5(FlightManager &fm)
 {
     cout << "\nWhich Airport?\n" << endl;
@@ -366,6 +437,11 @@ void IO::get_airport_info_5(FlightManager &fm)
     }
 }
 
+/**
+ * @brief da ao user a opção de escolher qual a informação que pretende de um dado país
+ * Complexidade: 1
+ * @param fm 
+ */
 void IO::get_country_info(FlightManager &fm)
 {
     cout << "---\n\n"
@@ -401,6 +477,11 @@ void IO::get_country_info(FlightManager &fm)
     }
 }
 
+/**
+ * @brief quantos voos começam num pais
+ * Complexidade: |V|
+ * @param fm 
+ */
 void IO::get_country_info_1(FlightManager &fm)
 {
     cout << "\nWhich Country?\n" << endl;
@@ -424,6 +505,11 @@ void IO::get_country_info_1(FlightManager &fm)
     cout << RED << endl << choice << " is not an available country.\n" << RESET << endl;
 }
 
+/**
+ * @brief quantas airlines operam dentro do pais
+ * COmplexidade:|V|
+ * @param fm 
+ */
 void IO::get_country_info_2(FlightManager &fm)
 {
     cout << "\nWhich Country?\n" << endl;
@@ -448,6 +534,11 @@ void IO::get_country_info_2(FlightManager &fm)
     cout << RED << endl << choice << " is not an available country.\n" << RESET << endl;
 }
 
+/**
+ * @brief para quantos aeroportos diferentes pode-se voar de um país
+ * Complexidade: n
+ * @param fm 
+ */
 void IO::get_country_info_3(FlightManager &fm)
 {
     cout << "\nWhich Country?\n" << endl;
@@ -483,6 +574,11 @@ void IO::get_country_info_3(FlightManager &fm)
     cout << RED << endl << choice << " is not an available country.\n" << RESET << endl;
 }
 
+/**
+ * @brief para quantos paises se pode voar a partir do pais
+ * Complexidade: n*m
+ * @param fm 
+ */
 void IO::get_country_info_4(FlightManager &fm)
 {
     cout << "\nWhich Country?\n" << endl;
@@ -523,6 +619,11 @@ void IO::get_country_info_4(FlightManager &fm)
     cout << RED << endl << choice << " is not an available country.\n" << RESET << endl;
 }
 
+/**
+ * @brief para quantos sitios diferentes se pode voar a partir do pais em x voos
+ * Complexidade: n
+ * @param fm 
+ */
 void IO::get_country_info_5(FlightManager &fm)
 {
     cout << "\nWhich Country?\n" << endl;
@@ -564,7 +665,11 @@ void IO::get_country_info_5(FlightManager &fm)
 }
 
 
-
+/**
+ * @brief pergunta ao user qual informação geral pretende
+ * Complexidade: 1
+ * @param fm 
+ */
 void IO::get_info(FlightManager &fm)
 {
     cout << "---\n\n"
@@ -594,24 +699,44 @@ void IO::get_info(FlightManager &fm)
     return;
 }
 
+/**
+ * @brief Devolve o total de voos que existem
+ * Complexidade: 1
+ * @param fm 
+ */
 void IO::get_info_1(FlightManager &fm)
 {
     int sum = fm.get_flights().get_number_of_flights();
     cout << BOLDWHITE << endl << "There are " << sum << " flights\n" << RESET << endl;
 }
 
+/**
+ * @brief devolve o total de airlines que existem
+ * Complexidade: 1
+ * @param fm 
+ */
 void IO::get_info_2(FlightManager &fm)
 {
     int sum = fm.get_airlines().size();
     cout << BOLDWHITE << endl << "There are " << sum << " Airlines\n" << RESET << endl;
 }
 
+/**
+ * @brief devolve o total de aeroportos que existem
+ * Complexidade: 1
+ * @param fm 
+ */
 void IO::get_info_3(FlightManager &fm)
 {
     int sum = fm.get_airports().size();
     cout << BOLDWHITE << endl << "There are " << sum << " Airports\n" << RESET << endl;
 }
 
+/**
+ * @brief deixa o utilizador escolher que informaçao pretende acerca dee uma airline
+ * Complexidade: 1
+ * @param fm 
+ */
 void IO::get_airline_info(FlightManager &fm)
 {
     cout << "---\n\n"
@@ -640,6 +765,11 @@ void IO::get_airline_info(FlightManager &fm)
     }
 }
 
+/**
+ * @brief quantos voos e que uma airline tem
+ * Complexidade: |V+E|
+ * @param fm 
+ */
 void IO::get_airline_info_1(FlightManager &fm)
 {
     cout << "\nWhich Airline?\n" << endl;
@@ -666,6 +796,11 @@ void IO::get_airline_info_1(FlightManager &fm)
     cout << BOLDWHITE << endl << choice << " does a total of " << sum << " flights" << RESET << endl;
 }
 
+/**
+ * @brief para quantos aeroportos diferentes da para voar para com a airline
+ * Complexidade: |V+E|
+ * @param fm 
+ */
 void IO::get_airline_info_2(FlightManager &fm)
 {
     cout << "\nWhich Airline?\n" << endl;
@@ -693,6 +828,11 @@ void IO::get_airline_info_2(FlightManager &fm)
     return;
 }
 
+/**
+ * @brief para quantos paises diferentes da para voar com uma airline
+ * Complexidade: |V+E|
+ * @param fm 
+ */
 void IO::get_airline_info_3(FlightManager &fm)
 {
     cout << "\nWhich Airline?\n" << endl;
