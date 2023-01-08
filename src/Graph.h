@@ -32,6 +32,8 @@ class Graph
     void DFL_aux(string s, int d, set<string> &c);
     unordered_map<string, Airport> airports;
     unordered_map<string, Airline> airlines;
+
+    int number_of_flights = 0;
     
   
   public:
@@ -42,6 +44,8 @@ class Graph
     set<string> DFL(string s, int d); // Depth First Listing
     unordered_map<string, Node> nodes;
     static float get_distance(float lat1, float lon1, float lat2, float lon2);
+    int get_number_of_flights() {return number_of_flights;};
+    void plus_one_flight() {number_of_flights++;};
     // static int hash(string code);
     // static string unhash(int code);
 };

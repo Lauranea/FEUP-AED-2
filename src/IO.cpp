@@ -35,8 +35,9 @@ bool IO::what_to_do(FlightManager &fm)
             "1 - Find the optimal flights.\n"
             "2 - Get info about a certain airport.\n"
             "3 - Get info about a certain country.\n"
+            "4 - Get info about every flight.\n"
             "\n"
-            "4 - Exit the program.\n" << endl;
+            "5 - Exit the program.\n" << endl;
     
     int choice = 0;
     choice = cin_int();
@@ -53,6 +54,9 @@ bool IO::what_to_do(FlightManager &fm)
             IO::get_country_info(fm);
             break;
         case 4:
+            IO::get_info(fm);
+            break;
+        case 5:
             return true;
         default:
             cout << RED << "\nInvalid choice\n" << RESET << endl;
@@ -553,4 +557,51 @@ void IO::get_country_info_5(FlightManager &fm)
         }
     }
     cout << BOLDWHITE << endl << "You can fly to " << airportstot.size() << " different Airports within " << max << " flights from this Country\n" << RESET << endl;
+}
+
+
+
+void IO::get_info(FlightManager &fm)
+{
+    cout << "---\n\n"
+            "1 - How many flights are there?\n"
+            "2 - How many Airlines are there?\n"
+            "3 - How many Airports are there?\n" << endl;
+    
+    int choice = 0;
+    choice = cin_int();
+
+    switch (choice)
+    {
+        case 1:
+            get_info_1(fm);
+            break;
+        case 2:
+            get_info_2(fm);
+            break;
+        case 3:
+            get_info_3(fm);
+            break;
+        default:
+            cout << RED << "\nInvalid choice\n" << RESET << endl;
+            return;
+    }
+}
+
+void IO::get_info_1(FlightManager &fm)
+{
+    int sum = fm.get_flights().get_number_of_flights();
+    cout << BOLDWHITE << endl << "There are " << sum << " flights\n" << RESET << endl;
+}
+
+void IO::get_info_2(FlightManager &fm)
+{
+    int sum = fm.get_airlines().size();
+    cout << BOLDWHITE << endl << "There are " << sum << " Airlines\n" << RESET << endl;
+}
+
+void IO::get_info_3(FlightManager &fm)
+{
+    int sum = fm.get_airports().size();
+    cout << BOLDWHITE << endl << "There are " << sum << " Airports\n" << RESET << endl;
 }

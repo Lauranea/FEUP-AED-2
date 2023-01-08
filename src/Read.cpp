@@ -99,6 +99,7 @@ Graph Read::read_flights(unordered_map<string, Airport> airports, unordered_map<
     getline(fi, buffer, '\n');
     while (getline(fi, buffer, '\n'))
     {
+        v.plus_one_flight();
         stringstream line(buffer);
         string src, dest, aline;
         getline(line, src, ',');
