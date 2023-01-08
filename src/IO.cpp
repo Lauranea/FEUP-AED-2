@@ -35,9 +35,10 @@ bool IO::what_to_do(FlightManager &fm)
             "1 - Find the optimal flights.\n"
             "2 - Get info about a certain airport.\n"
             "3 - Get info about a certain country.\n"
-            "4 - Get info about every flight.\n"
+            "4 - Get info about a certain airline.\n"
+            "5 - Get info about every flight.\n"
             "\n"
-            "5 - Exit the program.\n" << endl;
+            "6 - Exit the program.\n" << endl;
     
     int choice = 0;
     choice = cin_int();
@@ -54,9 +55,12 @@ bool IO::what_to_do(FlightManager &fm)
             IO::get_country_info(fm);
             break;
         case 4:
-            IO::get_info(fm);
+            IO::get_airline_info(fm);
             break;
         case 5:
+            IO::get_info(fm);
+            break;
+        case 6:
             return true;
         default:
             cout << RED << "\nInvalid choice\n" << RESET << endl;
@@ -586,6 +590,8 @@ void IO::get_info(FlightManager &fm)
             cout << RED << "\nInvalid choice\n" << RESET << endl;
             return;
     }
+
+    return;
 }
 
 void IO::get_info_1(FlightManager &fm)
@@ -604,4 +610,112 @@ void IO::get_info_3(FlightManager &fm)
 {
     int sum = fm.get_airports().size();
     cout << BOLDWHITE << endl << "There are " << sum << " Airports\n" << RESET << endl;
+}
+
+void IO::get_airline_info(FlightManager &fm)
+{
+    cout << "---\n\n"
+            "1 - How many flights does a certain Airline do?\n"
+            "2 - How many different Airports can you fly to with a certain Airline?\n"
+            "3 - How many different Countries can you fly to with a certain Airline?\n";
+    
+    int choice = 0;
+    choice = cin_int();
+
+    switch (choice)
+    {
+        case 1:
+            get_airline_info_1(fm);
+            break;
+        case 2:
+            get_airline_info_2(fm);
+            break;
+        case 3:
+            get_airline_info_3(fm);
+            break;
+        default:
+            cout << RED << "\nInvalid choice\n" << RESET << endl;
+            break;
+            return;
+    }
+}
+
+void IO::get_airline_info_1(FlightManager &fm)
+{
+    cout << "\nWhich Airline?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    int sum = 0;
+    bool found = false;
+    for (auto &[key, value] : fm.get_flights().nodes)
+    {
+        for(auto d : value.adj)
+        {
+            if(d.get_airline().get_name() == choice || d.get_airline().get_code() == choice)
+            {
+                sum++;
+                found = true;
+            }
+        }
+    }
+    if(!found)
+    {
+        cout << RED << endl << choice << " is not a valid airline.\n" << RESET << endl;
+        return;
+    }
+    cout << BOLDWHITE << endl << choice << " does a total of " << sum << " flights" << RESET << endl;
+}
+
+void IO::get_airline_info_2(FlightManager &fm)
+{
+    cout << "\nWhich Airline?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    bool found = false;
+    set<string> airports;
+    for (auto &[key, value] : fm.get_flights().nodes)
+    {
+        for(auto d : value.adj)
+        {
+            if(d.get_airline().get_name() == choice || d.get_airline().get_code() == choice)
+            {
+                airports.insert(d.get_target().get_code());
+                found = true;
+            }
+        }
+    }
+    if(!found)
+    {
+        cout << RED << endl << choice << " is not a valid airline.\n" << RESET << endl;
+        return;
+    }
+    cout << BOLDWHITE << endl << choice << " goes to a total of " << airports.size() << " airports." << RESET << endl;
+    return;
+}
+
+void IO::get_airline_info_3(FlightManager &fm)
+{
+    cout << "\nWhich Airline?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    bool found = false;
+    set<string> countries;
+    for (auto &[key, value] : fm.get_flights().nodes)
+    {
+        for(auto d : value.adj)
+        {
+            if(d.get_airline().get_name() == choice || d.get_airline().get_code() == choice)
+            {
+                countries.insert(d.get_target().get_country());
+                found = true;
+            }
+        }
+    }
+    if(!found)
+    {
+        cout << RED << endl << choice << " is not a valid airline.\n" << RESET << endl;
+        return;
+    }
+    cout << BOLDWHITE << endl << choice << " goes to a total of " << countries.size() << " countries." << RESET << endl;
+    return;
 }

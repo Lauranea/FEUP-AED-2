@@ -46,13 +46,18 @@ class IO
 
     static void get_country_info_1(FlightManager &fm);
     static void get_country_info_2(FlightManager &fm);
+    static void get_country_info_3(FlightManager &fm);
+    static void get_country_info_4(FlightManager &fm);
+    static void get_country_info_5(FlightManager &fm);
+
+    static void get_airline_info_1(FlightManager &fm);
+    static void get_airline_info_2(FlightManager &fm);
+    static void get_airline_info_3(FlightManager &fm);
+    static void get_airline_info_4(FlightManager &fm);
 
     static void get_info_1(FlightManager &fm);
     static void get_info_2(FlightManager &fm);
     static void get_info_3(FlightManager &fm);
-    static void get_country_info_3(FlightManager &fm);
-    static void get_country_info_4(FlightManager &fm);
-    static void get_country_info_5(FlightManager &fm);
     
 
   public:
@@ -61,6 +66,8 @@ class IO
     static void get_airport_info(FlightManager &fm);
 
     static void get_country_info(FlightManager &fm);
+
+    static void get_airline_info(FlightManager &fm);
 
     static void get_info(FlightManager &fm);
 
