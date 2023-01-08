@@ -52,6 +52,9 @@ class IO
 
     static bool what_to_do(FlightManager &fm);
 
+    static int cin_int();
+    static float cin_float();
+
 
 };
 

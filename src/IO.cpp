@@ -5,6 +5,30 @@
 
 #include "IO.h"
 
+int IO::cin_int()
+{
+    int choice = 0;
+    cin >> choice;
+    if (cin.fail())
+    {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+    return choice;
+}
+
+float IO::cin_float()
+{
+    float choice = 0;
+    cin >> choice;
+    if (cin.fail())
+    {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+    return choice;
+}
+
 bool IO::what_to_do(FlightManager &fm)
 {
     cout << "\n"
@@ -14,7 +38,7 @@ bool IO::what_to_do(FlightManager &fm)
             "3 - Exit the program.\n" << endl;
     
     int choice = 0;
-    cin >> choice;
+    choice = cin_int();
 
     switch (choice)
     {
@@ -51,7 +75,7 @@ void IO::find_optimal_path(FlightManager &fm)
                      "2 - Min distance\n" << endl;
     
     int min_what = 0;
-    cin >> min_what;
+    min_what = cin_int();
 
     min_what--;
 
@@ -88,14 +112,14 @@ void IO::find_optimal_path(FlightManager &fm)
     {
         cout << "\nMax distance from target coordinates?" << endl;
         float max_distance = 0;
-        cin >> max_distance;
+        max_distance = cin_float();
         optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, 2, end.second.first, end.second.second, max_distance).second;
     }
     else if (start.first == "" && end.first != "" && start.second.first != 0)
     {
         cout << "\nMax distance from starting coordinates?" << endl;
         float max_distance = 0;
-        cin >> max_distance;
+        max_distance = cin_float();
         vector<string> current_optimal;
         int current_optimal_weight = INT_MAX;
         for (auto &[key, value] : fm.get_airports())
@@ -115,10 +139,10 @@ void IO::find_optimal_path(FlightManager &fm)
     {
         cout << "\nMax distance from starting coordinates?" << endl;
         float max_distance_start = 0;
-        cin >> max_distance_start;
+        max_distance_start = cin_float();
         cout << "\nMax distance from target coordinates?" << endl;
         float max_distance_end = 0;
-        cin >> max_distance_end;
+        max_distance_end = cin_float();
         vector<string> current_optimal;
         int current_optimal_weight = INT_MAX;
         for (auto &[key, value] : fm.get_airports())
@@ -158,7 +182,7 @@ pair<string, pair<float, float>> IO::get_point(FlightManager &fm, string point_n
             "3 - An Airport close to these coordinates\n" << endl;
     
     int point_type = 0;
-    cin >> point_type;
+    point_type = cin_int();
 
     string point = "";
     float point_lat = 0; // Also stores if the point is an airport or a city
@@ -179,9 +203,9 @@ pair<string, pair<float, float>> IO::get_point(FlightManager &fm, string point_n
         case 3:
             cout << "\nWhich Coordinates?\n" << endl;
             cout << "Latitude: ";
-            cin >> point_lat;
+            point_lat = cin_float();
             cout << "Longitude: ";
-            cin >> point_lon;
+            point_lon = cin_float();
             break;
         default:
             cout << RED << "\nInvalid choice\n" << RESET << endl;
@@ -217,7 +241,7 @@ vector<string> IO::which_airlines_to_use(FlightManager &fm)
             "2 - Certain Airline(s)\n" << endl;
     
     int choice = 0;
-    cin >> choice;
+    choice = cin_int();
 
     switch (choice)
     {
@@ -246,7 +270,7 @@ void IO::get_airport_info(FlightManager &fm)
             "5 - How many different places can you fly to from from a certain Airport in X flights max?\n" << endl;
     
     int choice = 0;
-    cin >> choice;
+    choice = cin_int();
 
     switch (choice)
     {
@@ -332,7 +356,7 @@ void IO::get_airport_info_5(FlightManager &fm)
     cin >> choice;
     cout << "\nMax Flights?\n" << endl;
     int max = 0;
-    cin >> max;
+    choice = cin_int();
     if (max > 0)
     {
         cout << BOLDWHITE << endl << "You can fly to " << fm.get_flights().DFL(choice, max+1).size() << " different Airports within " << max << " flights from this Airport\n" << RESET << endl;
