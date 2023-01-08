@@ -379,13 +379,13 @@ void IO::get_country_info(FlightManager &fm)
             get_country_info_2(fm);
             break;
         case 3:
-            get_airport_info_3(fm);
+            get_country_info_3(fm);
             break;
         case 4:
-            get_airport_info_4(fm);
+            get_country_info_4(fm);
             break;
         case 5:
-            get_airport_info_5(fm);
+            get_country_info_5(fm);
             break;
         default:
             cout << RED << "\nInvalid choice\n" << RESET << endl;
@@ -410,7 +410,7 @@ void IO::get_country_info_1(FlightManager &fm)
     }
     if(found)
     {
-        cout << BOLDWHITE << endl << sum << " flights start on this Airport\n" << RESET << endl;
+        cout << BOLDWHITE << endl << sum << " flights start on this Country\n" << RESET << endl;
         return;
     }
     cout << RED << endl << choice << " is not an available country.\n" << RESET << endl;
@@ -418,7 +418,7 @@ void IO::get_country_info_1(FlightManager &fm)
 
 void IO::get_country_info_2(FlightManager &fm)
 {
-    cout << "\nWhich Airport?\n" << endl;
+    cout << "\nWhich Country?\n" << endl;
     string choice = "";
     cin >> choice;
     int sum = 0;
@@ -432,5 +432,125 @@ void IO::get_country_info_2(FlightManager &fm)
             found = true;
         }
     }
-    cout << BOLDWHITE << endl << diferent_airlines.size() << " Airlines operate on this Airport\n" << RESET << endl;
+    if(found)
+    {
+        cout << BOLDWHITE << endl << diferent_airlines.size() << " Airlines operate on this Country\n" << RESET << endl;
+        return;
+    }
+    cout << RED << endl << choice << " is not an available country.\n" << RESET << endl;
+}
+
+void IO::get_country_info_3(FlightManager &fm)
+{
+    cout << "\nWhich Country?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    int sum = 0;
+    set<string> different_airports;
+    list<Flight> flights;
+    set<string> airports;
+    bool found = false;
+    unordered_map<string, Airport> airports2 = fm.get_airports();
+    for(auto i : airports2)
+    {
+        if(i.second.get_country() == choice)
+        {
+            found = true;
+            airports.insert(i.second.get_code());
+        }
+    }
+    for(auto i : airports)
+    {
+        flights = fm.get_flights().nodes[i].adj;
+        for (Flight p : flights)
+        {
+            different_airports.insert(p.get_target().get_code());
+        }
+    }
+    if(found)
+    {
+        cout << BOLDWHITE << endl << "You can fly to " << different_airports.size() << " different Airports from this Country\n" << RESET << endl;
+        return;
+    }
+    cout << RED << endl << choice << " is not an available country.\n" << RESET << endl;
+}
+
+void IO::get_country_info_4(FlightManager &fm)
+{
+    cout << "\nWhich Country?\n" << endl;
+    string choice = "";
+    cin >> choice;
+    int sum = 0;
+    set<string> different_airports;
+    list<Flight> flights;
+    set<string> airports;
+    bool found = false;
+    unordered_map<string, Airport> airports2 = fm.get_airports();
+    set<string> country;
+    for(auto i : airports2)
+    {
+        if(i.second.get_country() == choice)
+        {
+            found = true;
+            airports.insert(i.second.get_code());
+        }
+    }
+    for(auto i : airports)
+    {
+        flights = fm.get_flights().nodes[i].adj;
+        for (Flight p : flights)
+        {
+            different_airports.insert(p.get_target().get_code());
+        }
+    }
+    for(auto i : different_airports)
+    {
+        country.insert(airports2[i].get_country());
+    }
+    if(found)
+    {
+        cout << BOLDWHITE << endl << "You can fly to " << country.size() << " different Countries from this Country\n" << RESET << endl;
+        return;
+    }
+    cout << RED << endl << choice << " is not an available country.\n" << RESET << endl;
+}
+
+void IO::get_country_info_5(FlightManager &fm)
+{
+    cout << "\nWhich Country?\n" << endl;
+    string choice1 = "";
+    int choice;
+    cin >> choice1;
+    cout << "\nMax Flights?\n" << endl;
+    int max = 0;
+    int sum = 0;
+    choice = cin_int();
+    unordered_map<string, Airport> airports2 = fm.get_airports();
+    set<string> airports;
+    set<string> airportstot;
+    set<string> b;
+    bool found = false;
+    max = choice;
+    for(auto i : airports2)
+    {
+        if(i.second.get_country() == choice1)
+        {
+            found = true;
+            airports.insert(i.second.get_code());
+        }
+    }
+    if(!found)
+    {
+        cout << RED << endl << choice << " is not an available country.\n" << RESET << endl;
+        return;
+    }
+    if (max > 0)
+    {
+        for(auto i : airports)
+        {
+            b = fm.get_flights().DFL(i, max+1);
+            airportstot.insert(b.begin(), b.end());
+        }
+    }
+    cout << BOLDWHITE << endl << "You can fly to " << airportstot.size() << " different Airports within " << max << " flights from this Country\n" << RESET << endl;
 }
