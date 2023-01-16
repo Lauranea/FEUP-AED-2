@@ -118,11 +118,12 @@ void IO::find_optimal_path(FlightManager &fm)
         return;
     }
 
-    if (start.first != "" && end.first != "")
+    if (start.first != "")
     {
         if (start.second.second.first == 0)
         {
-            optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, end.second.second.first).second;
+            if (end.first == "") optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, 2, end.second.second.first, end.second.second.second, end.second.first).second;
+            else optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, end.second.second.first).second;
         }
         else
         {
@@ -132,19 +133,19 @@ void IO::find_optimal_path(FlightManager &fm)
             {
                 if (value.get_city() == start.first)
                 {
-                    pair<int, vector<string>> opt = fm.get_flights().BFS(start.first, end.first, min_what, lines, end.second.second.first);
+                    pair<int, vector<string>> opt;
+                    if (end.first == "") opt = fm.get_flights().BFS(value.get_code(), end.first, min_what, lines, 2, end.second.second.first, end.second.second.second, end.second.first);
+                    else opt = fm.get_flights().BFS(value.get_code(), end.first, min_what, lines, end.second.second.first);
+
                     if (opt.first < current_optimal_weight)
                     {
                         current_optimal = opt.second;
+                        current_optimal_weight = opt.first;
                     }
                 }
             }
             optimal = current_optimal;
         }
-    }
-    else if (start.first != "" && end.first == "" && end.second.second.second != 0)
-    {
-        optimal = fm.get_flights().BFS(start.first, end.first, min_what, lines, 2, end.second.second.first, end.second.second.second, start.second.first).second;
     }
     else if (start.first == "" && end.first != "" && start.second.second.first != 0)
     {
@@ -158,6 +159,7 @@ void IO::find_optimal_path(FlightManager &fm)
                 if (opt.first < current_optimal_weight)
                 {
                     current_optimal = opt.second;
+                    current_optimal_weight = opt.first;
                 }
             }
         }
@@ -175,6 +177,7 @@ void IO::find_optimal_path(FlightManager &fm)
                 if (opt.first < current_optimal_weight)
                 {
                     current_optimal = opt.second;
+                    current_optimal_weight = opt.first;
                 }
             }
         }
@@ -430,7 +433,7 @@ void IO::get_airport_info_5(FlightManager &fm)
     cin >> choice;
     cout << "\nMax Flights?\n" << endl;
     int max = 0;
-    choice = cin_int();
+    max = cin_int();
     if (max > 0)
     {
         cout << BOLDWHITE << endl << "You can fly to " << fm.get_flights().DFL(choice, max+1).size() << " different Airports within " << max << " flights from this Airport\n" << RESET << endl;
